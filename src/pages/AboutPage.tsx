@@ -27,7 +27,7 @@ export default function AboutPage() {
                     <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
                     <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     <a href="https://x.com" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
-                    <a href="https://artstation.com" target="_blank" rel="noopener noreferrer">ArtStation</a>
+                    <a href="https://www.artstation.com/mengrangu" target="_blank" rel="noopener noreferrer">Artstation</a>
                 </div>
             </div>
         </div>
