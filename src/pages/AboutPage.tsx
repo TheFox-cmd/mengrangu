@@ -21,7 +21,7 @@ export default function AboutPage() {
                     player arrived. I love creating art that carries atmosphere,
                     emotion, and a sense of story without needing to say too much.
                     If you'd like to collaborate or just say hello, feel free to reach out —
-                    I'm always open to new adventures!aaaaa
+                    I'm always open to new adventures!
                 </p>
                 <div className="about-links">
                     <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
