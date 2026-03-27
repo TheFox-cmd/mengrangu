@@ -13,7 +13,7 @@ export default function AboutPage() {
             <div className="about-text">
                 <h1 className="about-title">About Me</h1>
                 <p className="about-bio">
-                    Hi, I am TastyBunny! I'm a conceptual artist with 4 years of
+                    Hi, I am TastyBunny 谷梦冉! I'm a conceptual artist with 4 years of
                     experience in the gaming industry, focused on character design and
                     environmental illustration. I'm drawn to the small things that make
                     a world feel alive: the shape of a silhouette, the mood of a quiet
