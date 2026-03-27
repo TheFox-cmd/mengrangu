@@ -8,7 +8,7 @@ export default function AboutPage() {
         <div className="about-container">
             <BackButton />
             <div className="about-image">
-                <img src="https://placehold.co/800x1000" alt="TastyBunny" />
+                <img src="/about.png" alt="TastyBunny" style={{ width: '100%', height: 'auto' }} />
             </div>
             <div className="about-text">
                 <h1 className="about-title">About TastyBunny </h1>
