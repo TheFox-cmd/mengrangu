@@ -11,7 +11,7 @@ export default function AboutPage() {
                 <img src="https://placehold.co/800x1000" alt="TastyBunny" />
             </div>
             <div className="about-text">
-                <h1 className="about-title">About Me</h1>
+                <h1 className="about-title">About TastyBunny </h1>
                 <p className="about-bio">
                     TastyBunny is a conceptual artist with 4 years of
                     experience in the gaming industry, focused on character design and
@@ -21,7 +21,7 @@ export default function AboutPage() {
                     player arrived. I love creating art that carries atmosphere,
                     emotion, and a sense of story without needing to say too much.
                     If you'd like to collaborate or just say hello, feel free to reach out —
-                    I'm always open to new adventures!
+                    I'm always open to new adventures!aaaaa
                 </p>
                 <div className="about-links">
                     <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
