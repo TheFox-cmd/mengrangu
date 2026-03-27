@@ -1,0 +1,124 @@
+.project-page {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.project-detail-header {
+  padding: 40px 48px 24px;
+
+  @media (max-width: 768px) {
+    padding: 32px 24px 20px;
+  }
+}
+
+.back-link {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--text-heading);
+  }
+}
+
+.project-hero {
+  padding: 120px 48px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 100px 24px 48px;
+  }
+}
+
+.project-detail-title {
+  font-size: 3rem;
+  color: var(--text-heading);
+  margin: 0 0 12px;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.project-detail-brief {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+.project-body {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 48px;
+
+  @media (max-width: 768px) {
+    padding: 40px 24px;
+  }
+}
+
+.project-description {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text);
+  max-width: 700px;
+  margin: 0 auto 48px;
+}
+
+.masonry-gallery {
+  columns: 3;
+  column-gap: 16px;
+
+  @media (max-width: 1024px) {
+    columns: 2;
+  }
+
+  @media (max-width: 600px) {
+    columns: 1;
+  }
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  border-radius: 6px;
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .fade-img {
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.4s ease;
+  }
+
+  .fade-img.loaded {
+    opacity: 1;
+  }
+
+  &:hover img {
+    transform: scale(1.02);
+  }
+}
+
+.project-gallery-placeholder {
+  margin-top: 48px;
+  padding: 80px;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}

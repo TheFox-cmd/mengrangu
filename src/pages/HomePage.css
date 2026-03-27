@@ -1,0 +1,9 @@
+.home-scroll-container {
+  height: 100svh;
+  overflow: hidden;
+}
+
+.snap-section {
+  height: 100svh;
+  overflow-y: hidden;
+}
