@@ -16,13 +16,10 @@ export default function Header() {
     const [hidden, setHidden] = useState(false)
     const projectsRef = useRef<HTMLDivElement>(null)
     const galleryRef = useRef<HTMLDivElement>(null)
-    const lastScrollY = useRef(0)
 
     useEffect(() => {
         const onScroll = () => {
-            const y = window.scrollY
-            setHidden(y > 80 && y > lastScrollY.current)
-            lastScrollY.current = y
+            setHidden(window.scrollY > 80)
         }
         window.addEventListener('scroll', onScroll, { passive: true })
         return () => window.removeEventListener('scroll', onScroll)
