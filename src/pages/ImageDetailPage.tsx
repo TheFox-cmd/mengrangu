@@ -64,6 +64,12 @@ export default function ImageDetailPage() {
         )
     }
 
+    const imageName = (() => {
+        const src = images[idx] ?? ''
+        const decoded = decodeURIComponent(src.split('/').pop() ?? '')
+        return decoded.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ')
+    })()
+
     return (
         <div className="image-detail-page">
             <BackButton />
@@ -78,7 +84,10 @@ export default function ImageDetailPage() {
                         </button>
                     )}
 
-                    <img src={images[idx]} alt={`${sectionTitle} ${idx + 1}`} className="image-detail-img" />
+                    <div className="image-detail-center">
+                        <img src={images[idx]} alt={`${sectionTitle} ${idx + 1}`} className="image-detail-img" />
+                        <p className="image-detail-caption">{imageName}</p>
+                    </div>
 
                     {hasNext && (
                         <button className="image-nav image-nav--next" onClick={() => goTo(idx + 1)} aria-label="Next image">
@@ -89,22 +98,8 @@ export default function ImageDetailPage() {
                     )}
                 </div>
 
-                <div className="image-detail-info">
+                <div className="image-detail-meta">
                     <p className="image-detail-counter">{idx + 1} / {images.length}</p>
-                    <h1 className="image-detail-title">{sectionTitle} — Image {idx + 1}</h1>
-                    <p className="image-detail-desc">
-                        This piece explores composition and mood within the {sectionTitle} series.
-                        The focus here is on atmosphere and visual storytelling, balancing light
-                        and form to create a sense of place.
-                    </p>
-                    <div className="image-detail-feedback">
-                        <h2>Notes</h2>
-                        <p>
-                            Placeholder feedback — color palette works well with the overall tone.
-                            Consider refining edge detail in the foreground elements. The silhouette
-                            reads clearly at thumbnail scale.
-                        </p>
-                    </div>
                     <Link to={basePath} className="image-detail-back-link">
                         ← Back to {sectionTitle}
                     </Link>

@@ -1,3 +1,31 @@
+import arcanaGwenFinal from '../assets/projects/arcana-gwen/final.jpg'
+import arcanaGwenPass2 from '../assets/projects/arcana-gwen/pass-2.jpg'
+import arcanaGwenThumbnails from '../assets/projects/arcana-gwen/thumbnail-explorations.jpg'
+import arcanaGwenWeek4 from '../assets/projects/arcana-gwen/week-4.jpg'
+
+import bloodmoonConcept from '../assets/projects/bloodmoon-liliah/concept-edit.jpg'
+import bloodmoonRenders1 from '../assets/projects/bloodmoon-liliah/renders-1.jpg'
+import bloodmoonRenders2 from '../assets/projects/bloodmoon-liliah/renders-2.jpg'
+import bloodmoonRenders3 from '../assets/projects/bloodmoon-liliah/renders-3.jpg'
+import bloodmoonSkillShots from '../assets/projects/bloodmoon-liliah/skill-shots.jpg'
+
+import wildSkyAwakenFinal from '../assets/projects/wild-sky/awaken-skin-final.jpg'
+import wildSkyFireJesterRender from '../assets/projects/wild-sky/banner-design/fire-jester-render.jpg'
+import wildSkyLightHeroKatt from '../assets/projects/wild-sky/banner-design/light-hero-katt.jpg'
+import wildSkyMedusa from '../assets/projects/wild-sky/banner-design/medusa.jpg'
+import wildSkyCentaurFinal from '../assets/projects/wild-sky/centaur-skin-final.jpg'
+import wildSkyJesterAwaken from '../assets/projects/wild-sky/jester-awaken-final.jpg'
+import wildSkyJesterFireHero from '../assets/projects/wild-sky/jester-fire-hero-concept.jpg'
+import wildSkyJesterHalloween from '../assets/projects/wild-sky/jester-halloween.jpg'
+import wildSkyJesterProp from '../assets/projects/wild-sky/jester-prop.jpg'
+
+import zeronisNftFoxy from '../assets/projects/zeronis-nft/foxy.jpg'
+import zeronisNftTaeyeon from '../assets/projects/zeronis-nft/taeyeon.jpg'
+
+import zylaExpression from '../assets/projects/zyla/expression.jpg'
+import zylaIdeation from '../assets/projects/zyla/ideation.jpg'
+import zylaPresentation from '../assets/projects/zyla/presentation.jpg'
+
 export interface Project {
   id: string
   title: string
@@ -11,157 +39,80 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: '1',
-    title: 'Echoes of Aranya',
-    brief: 'Fantasy environment & character designs for an indie RPG',
-    slug: 'echoes-of-aranya',
+    title: 'Arcana Gwen',
+    brief: 'Character concept art & skin design',
+    slug: 'arcana-gwen',
     color: '#C7B299',
     description:
-      'A full concept art package for a story-driven RPG set in a crumbling jungle civilization. Environments, key characters, and prop sheets delivered over a 6-month production cycle.',
+      'Concept explorations and final renders for the Arcana Gwen skin. Focused on thumbnail ideation, iterative passes, and a polished final deliverable.',
     images: [
-      'https://placehold.co/600x400/C7B299/fff?text=Aranya+1',
-      'https://placehold.co/600x800/B8A589/fff?text=Aranya+2',
-      'https://placehold.co/600x500/D4C4A8/fff?text=Aranya+3',
-      'https://placehold.co/600x700/A99B82/fff?text=Aranya+4',
-      'https://placehold.co/600x450/C7B299/fff?text=Aranya+5',
-      'https://placehold.co/600x600/B8A589/fff?text=Aranya+6',
-      'https://placehold.co/600x350/D4C4A8/fff?text=Aranya+7',
-      'https://placehold.co/600x550/A99B82/fff?text=Aranya+8',
-      'https://placehold.co/600x480/C7B299/fff?text=Aranya+9',
-      'https://placehold.co/600x720/B8A589/fff?text=Aranya+10',
-      'https://placehold.co/600x380/D4C4A8/fff?text=Aranya+11',
-      'https://placehold.co/600x620/A99B82/fff?text=Aranya+12',
-      'https://placehold.co/600x530/C7B299/fff?text=Aranya+13',
-      'https://placehold.co/600x750/B8A589/fff?text=Aranya+14',
-      'https://placehold.co/600x420/D4C4A8/fff?text=Aranya+15',
-      'https://placehold.co/600x580/A99B82/fff?text=Aranya+16',
-      'https://placehold.co/600x670/C7B299/fff?text=Aranya+17',
-      'https://placehold.co/600x440/B8A589/fff?text=Aranya+18',
-      'https://placehold.co/600x560/D4C4A8/fff?text=Aranya+19',
-      'https://placehold.co/600x690/A99B82/fff?text=Aranya+20',
+      arcanaGwenFinal,
+      arcanaGwenPass2,
+      arcanaGwenThumbnails,
+      arcanaGwenWeek4,
     ],
   },
   {
     id: '2',
-    title: 'Neon Drift',
-    brief: 'Cyberpunk vehicle and cityscape concepts',
-    slug: 'neon-drift',
+    title: 'Bloodmoon Liliah',
+    brief: 'Bloodmoon-themed champion concept design',
+    slug: 'bloodmoon-liliah',
     color: '#8B9EAE',
     description:
-      'Futuristic vehicle designs and neon-lit urban landscapes for a racing game pitch. Focus on mood, speed, and atmospheric lighting.',
+      'A Bloodmoon skin concept for Lillia — from initial concept edit through skill shot explorations and final renders.',
     images: [
-      'https://placehold.co/600x500/8B9EAE/fff?text=Neon+1',
-      'https://placehold.co/600x700/7A8D9D/fff?text=Neon+2',
-      'https://placehold.co/600x400/9CAFBF/fff?text=Neon+3',
-      'https://placehold.co/600x600/6B7E8E/fff?text=Neon+4',
-      'https://placehold.co/600x450/8B9EAE/fff?text=Neon+5',
-      'https://placehold.co/600x800/7A8D9D/fff?text=Neon+6',
-      'https://placehold.co/600x520/9CAFBF/fff?text=Neon+7',
-      'https://placehold.co/600x680/6B7E8E/fff?text=Neon+8',
-      'https://placehold.co/600x430/8B9EAE/fff?text=Neon+9',
-      'https://placehold.co/600x570/7A8D9D/fff?text=Neon+10',
-      'https://placehold.co/600x750/9CAFBF/fff?text=Neon+11',
-      'https://placehold.co/600x380/6B7E8E/fff?text=Neon+12',
-      'https://placehold.co/600x640/8B9EAE/fff?text=Neon+13',
-      'https://placehold.co/600x490/7A8D9D/fff?text=Neon+14',
-      'https://placehold.co/600x720/9CAFBF/fff?text=Neon+15',
-      'https://placehold.co/600x410/6B7E8E/fff?text=Neon+16',
-      'https://placehold.co/600x560/8B9EAE/fff?text=Neon+17',
-      'https://placehold.co/600x670/7A8D9D/fff?text=Neon+18',
-      'https://placehold.co/600x350/9CAFBF/fff?text=Neon+19',
-      'https://placehold.co/600x620/6B7E8E/fff?text=Neon+20',
+      bloodmoonConcept,
+      bloodmoonSkillShots,
+      bloodmoonRenders1,
+      bloodmoonRenders2,
+      bloodmoonRenders3,
     ],
   },
   {
     id: '3',
-    title: 'The Hollow Court',
-    brief: 'Dark fantasy creature & costume design',
-    slug: 'the-hollow-court',
+    title: 'Wild Sky',
+    brief: 'Character skins, props & banner art for Wild Sky',
+    slug: 'wild-sky',
     color: '#A89B8C',
     description:
-      'Creature concepts and regal costume designs for a gothic fantasy animated series. Emphasis on silhouette readability and unsettling elegance.',
+      'A collection of character skin designs, prop concepts, and promotional banner art created for the Wild Sky project. Includes awaken skins, Halloween variants, and hero concept art.',
     images: [
-      'https://placehold.co/600x750/A89B8C/fff?text=Hollow+1',
-      'https://placehold.co/600x400/988B7C/fff?text=Hollow+2',
-      'https://placehold.co/600x600/B8AB9C/fff?text=Hollow+3',
-      'https://placehold.co/600x500/887B6C/fff?text=Hollow+4',
-      'https://placehold.co/600x700/A89B8C/fff?text=Hollow+5',
-      'https://placehold.co/600x450/988B7C/fff?text=Hollow+6',
-      'https://placehold.co/600x550/B8AB9C/fff?text=Hollow+7',
-      'https://placehold.co/600x480/887B6C/fff?text=Hollow+8',
-      'https://placehold.co/600x620/A89B8C/fff?text=Hollow+9',
-      'https://placehold.co/600x380/988B7C/fff?text=Hollow+10',
-      'https://placehold.co/600x720/B8AB9C/fff?text=Hollow+11',
-      'https://placehold.co/600x430/887B6C/fff?text=Hollow+12',
-      'https://placehold.co/600x570/A89B8C/fff?text=Hollow+13',
-      'https://placehold.co/600x680/988B7C/fff?text=Hollow+14',
-      'https://placehold.co/600x350/B8AB9C/fff?text=Hollow+15',
-      'https://placehold.co/600x530/887B6C/fff?text=Hollow+16',
-      'https://placehold.co/600x660/A89B8C/fff?text=Hollow+17',
-      'https://placehold.co/600x410/988B7C/fff?text=Hollow+18',
-      'https://placehold.co/600x590/B8AB9C/fff?text=Hollow+19',
-      'https://placehold.co/600x740/887B6C/fff?text=Hollow+20',
+      wildSkyAwakenFinal,
+      wildSkyCentaurFinal,
+      wildSkyJesterAwaken,
+      wildSkyJesterHalloween,
+      wildSkyJesterProp,
+      wildSkyJesterFireHero,
+      wildSkyFireJesterRender,
+      wildSkyLightHeroKatt,
+      wildSkyMedusa,
     ],
   },
   {
     id: '4',
-    title: 'Solarpunk Diaries',
-    brief: 'Optimistic sci-fi world-building illustrations',
-    slug: 'solarpunk-diaries',
+    title: 'Zeronis NFT',
+    brief: 'Stylized character illustrations',
+    slug: 'zeronis-nft',
     color: '#9BB5A0',
     description:
-      'A personal project exploring solarpunk architecture, sustainable tech, and community spaces. Lush greens, warm light, and hopeful futures.',
+      'Stylized character illustrations created for the Zeronis NFT collection, featuring expressive poses and vibrant rendering.',
     images: [
-      'https://placehold.co/600x500/9BB5A0/fff?text=Solar+1',
-      'https://placehold.co/600x800/8BA590/fff?text=Solar+2',
-      'https://placehold.co/600x400/ABC5B0/fff?text=Solar+3',
-      'https://placehold.co/600x650/7B9580/fff?text=Solar+4',
-      'https://placehold.co/600x450/9BB5A0/fff?text=Solar+5',
-      'https://placehold.co/600x700/8BA590/fff?text=Solar+6',
-      'https://placehold.co/600x350/ABC5B0/fff?text=Solar+7',
-      'https://placehold.co/600x550/7B9580/fff?text=Solar+8',
-      'https://placehold.co/600x600/9BB5A0/fff?text=Solar+9',
-      'https://placehold.co/600x470/8BA590/fff?text=Solar+10',
-      'https://placehold.co/600x730/ABC5B0/fff?text=Solar+11',
-      'https://placehold.co/600x420/7B9580/fff?text=Solar+12',
-      'https://placehold.co/600x580/9BB5A0/fff?text=Solar+13',
-      'https://placehold.co/600x680/8BA590/fff?text=Solar+14',
-      'https://placehold.co/600x390/ABC5B0/fff?text=Solar+15',
-      'https://placehold.co/600x540/7B9580/fff?text=Solar+16',
-      'https://placehold.co/600x760/9BB5A0/fff?text=Solar+17',
-      'https://placehold.co/600x430/8BA590/fff?text=Solar+18',
-      'https://placehold.co/600x610/ABC5B0/fff?text=Solar+19',
-      'https://placehold.co/600x520/7B9580/fff?text=Solar+20',
+      zeronisNftFoxy,
+      zeronisNftTaeyeon,
     ],
   },
   {
     id: '5',
-    title: 'Iron & Ember',
-    brief: 'Medieval forge & battlefield key art',
-    slug: 'iron-and-ember',
+    title: 'Zyla',
+    brief: 'Original character design & presentation',
+    slug: 'zyla',
     color: '#B8A08A',
     description:
-      'Key art and marketing illustrations for a strategy game set in the late medieval period. Fire-lit forges, sprawling encampments, and siege warfare.',
+      'Original character design for Zyla — from early ideation and expression sheets through to a polished presentation.',
     images: [
-      'https://placehold.co/600x600/B8A08A/fff?text=Iron+1',
-      'https://placehold.co/600x400/A8907A/fff?text=Iron+2',
-      'https://placehold.co/600x750/C8B09A/fff?text=Iron+3',
-      'https://placehold.co/600x500/98806A/fff?text=Iron+4',
-      'https://placehold.co/600x450/B8A08A/fff?text=Iron+5',
-      'https://placehold.co/600x700/A8907A/fff?text=Iron+6',
-      'https://placehold.co/600x530/C8B09A/fff?text=Iron+7',
-      'https://placehold.co/600x680/98806A/fff?text=Iron+8',
-      'https://placehold.co/600x420/B8A08A/fff?text=Iron+9',
-      'https://placehold.co/600x570/A8907A/fff?text=Iron+10',
-      'https://placehold.co/600x740/C8B09A/fff?text=Iron+11',
-      'https://placehold.co/600x380/98806A/fff?text=Iron+12',
-      'https://placehold.co/600x630/B8A08A/fff?text=Iron+13',
-      'https://placehold.co/600x490/A8907A/fff?text=Iron+14',
-      'https://placehold.co/600x710/C8B09A/fff?text=Iron+15',
-      'https://placehold.co/600x460/98806A/fff?text=Iron+16',
-      'https://placehold.co/600x550/B8A08A/fff?text=Iron+17',
-      'https://placehold.co/600x660/A8907A/fff?text=Iron+18',
-      'https://placehold.co/600x360/C8B09A/fff?text=Iron+19',
-      'https://placehold.co/600x590/98806A/fff?text=Iron+20',
+      zylaExpression,
+      zylaIdeation,
+      zylaPresentation,
     ],
   },
 ]

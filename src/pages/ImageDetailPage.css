@@ -13,24 +13,44 @@
 
 .image-detail-content {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   min-height: 100svh;
 }
 
 .image-detail-viewer {
-  flex: 1.2;
-  min-width: 0;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 40px;
+  padding: 80px 40px 24px;
+  min-height: 80svh;
+}
+
+.image-detail-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
 }
 
 .image-detail-img {
   max-width: 100%;
-  max-height: 85svh;
+  max-height: 78svh;
   object-fit: contain;
   border-radius: 4px;
+}
+
+.image-detail-caption {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin: 16px 0 0;
+  text-align: center;
+  text-transform: capitalize;
 }
 
 .image-nav {
@@ -62,13 +82,12 @@
   right: 16px;
 }
 
-.image-detail-info {
-  flex: 0.8;
-  min-width: 0;
+.image-detail-meta {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  padding: 64px 56px;
+  gap: 24px;
+  padding: 16px 40px 40px;
 }
 
 .image-detail-counter {
@@ -78,47 +97,7 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin: 0 0 16px;
-}
-
-.image-detail-title {
-  font-family: var(--font-heading);
-  font-size: 1.8rem;
-  font-weight: 400;
-  color: var(--text-heading);
-  margin: 0 0 20px;
-}
-
-.image-detail-desc {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 300;
-  line-height: 1.8;
-  color: var(--text);
-  margin: 0 0 32px;
-}
-
-.image-detail-feedback {
-  border-top: 1px solid var(--border);
-  padding-top: 24px;
-  margin-bottom: 32px;
-
-  h2 {
-    font-family: var(--font-heading);
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--text-heading);
-    margin: 0 0 12px;
-  }
-
-  p {
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    font-weight: 300;
-    line-height: 1.7;
-    color: var(--text);
-    margin: 0;
-  }
+  margin: 0;
 }
 
 .image-detail-back-link {
@@ -136,18 +115,13 @@
 }
 
 @media (max-width: 900px) {
-  .image-detail-content {
-    flex-direction: column;
-    min-height: auto;
-  }
-
   .image-detail-viewer {
     min-height: 50svh;
-    padding: 80px 24px 24px;
+    padding: 80px 24px 16px;
   }
 
-  .image-detail-info {
-    padding: 32px 24px 48px;
+  .image-detail-meta {
+    padding: 12px 24px 32px;
   }
 
   .image-nav {

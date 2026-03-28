@@ -9,7 +9,7 @@ export default function HeroSection({ showScrollIndicator = true }: HeroSectionP
         <section className="hero-section">
             <div className="hero-overlay" />
             <div className="hero-content">
-                <h1 className="hero-title">tastybunny</h1>
+                <h1 className="hero-title">mengrangu</h1>
                 <p className="hero-subtitle">Concept Art &amp; Illustration</p>
             </div>
             {showScrollIndicator && (

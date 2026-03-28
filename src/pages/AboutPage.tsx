@@ -1,3 +1,4 @@
+import resumePdf from '../assets/Resume 2026_new.pdf'
 import BackButton from '../components/BackButton'
 import usePageTitle from '../hooks/usePageTitle'
 import './AboutPage.css'
@@ -8,12 +9,12 @@ export default function AboutPage() {
         <div className="about-container">
             <BackButton />
             <div className="about-image">
-                <img src="/about.png" alt="TastyBunny" style={{ width: '100%', height: 'auto' }} />
+                <img src="/about.png" alt="Mengrangu" style={{ width: '100%', height: 'auto' }} />
             </div>
             <div className="about-text">
-                <h1 className="about-title">About TastyBunny </h1>
+                <h1 className="about-title">About Mengrangu</h1>
                 <p className="about-bio">
-                    TastyBunny is a conceptual artist with 4 years of
+                    Mengrangu is a conceptual artist with 4 years of
                     experience in the gaming industry, focused on character design and
                     environmental illustration. I'm drawn to the small things that make
                     a world feel alive: the shape of a silhouette, the mood of a quiet
@@ -23,6 +24,9 @@ export default function AboutPage() {
                     If you'd like to collaborate or just say hello, feel free to reach out —
                     I'm always open to new adventures!
                 </p>
+                <a href={resumePdf} download className="about-download-cv">
+                    Download CV
+                </a>
                 <div className="about-links">
                     <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
                     <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>

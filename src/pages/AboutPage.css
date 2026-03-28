@@ -43,6 +43,27 @@
   margin: 0;
 }
 
+.about-download-cv {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 10px 28px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-heading);
+  border: 1px solid var(--text-heading);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background: var(--text-heading);
+    color: var(--bg);
+  }
+}
+
 .about-links {
   display: flex;
   gap: 24px;
