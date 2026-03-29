@@ -5,7 +5,9 @@ import {
     HiChevronDown,
     HiHome,
     HiInformationCircle,
+    HiMoon,
     HiPhoto,
+    HiSun,
     HiUsers,
     HiXMark,
 } from 'react-icons/hi2'
@@ -31,12 +33,22 @@ export default function Header() {
         open: false,
         pathname: location.pathname,
     })
+    const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+        const stored = localStorage.getItem('theme')
+        if (stored === 'light' || stored === 'dark') return stored
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    })
     const [mobileExpanded, setMobileExpanded] = useState({
         projects: false,
         gallery: false,
     })
     const projectsRef = useRef<HTMLDivElement>(null)
     const galleryRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        document.documentElement.dataset.theme = theme
+        localStorage.setItem('theme', theme)
+    }, [theme])
 
     useEffect(() => {
         const onScroll = () => {
@@ -94,173 +106,185 @@ export default function Header() {
     }
 
     return (
-        <header className={`header${hidden && !mobileMenuOpen ? ' header--hidden' : ''}${mobileMenuOpen ? ' header--menu-open' : ''}`}>
+        <>
             <button
-                className="mobile-menu-toggle"
-                onClick={(e) => {
-                    e.stopPropagation()
-                    toggleMobileMenu()
-                }}
-                aria-label="Toggle navigation menu"
-                aria-expanded={mobileMenuOpen}
+                className="theme-toggle"
+                type="button"
+                onClick={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
+                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
             >
-                {mobileMenuOpen ? <HiXMark /> : <HiBars3 />}
+                {theme === 'dark' ? <HiSun /> : <HiMoon />}
             </button>
 
-            <nav className="header-nav">
-                <Link
-                    to={navLinks[0].path}
-                    className={`nav-link${location.pathname === navLinks[0].path ? ' active' : ''}`}
+            <header className={`header${hidden && !mobileMenuOpen ? ' header--hidden' : ''}${mobileMenuOpen ? ' header--menu-open' : ''}`}>
+                <button
+                    className="mobile-menu-toggle"
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        toggleMobileMenu()
+                    }}
+                    aria-label="Toggle navigation menu"
+                    aria-expanded={mobileMenuOpen}
                 >
-                    {navLinks[0].label}
-                </Link>
+                    {mobileMenuOpen ? <HiXMark /> : <HiBars3 />}
+                </button>
 
-                <div className="header-dropdown-wrap" ref={projectsRef}>
-                    <button
-                        className="nav-link dropdown-toggle"
-                        onClick={() => toggle('projects')}
-                        aria-expanded={visibleDropdown === 'projects'}
-                    >
-                        Projects
-                        <HiChevronDown className={`toggle-arrow${visibleDropdown === 'projects' ? ' open' : ''}`} />
-                    </button>
-                    {visibleDropdown === 'projects' && (
-                        <ul className="header-dropdown">
-                            {publicProjects.map((p) => (
-                                <li key={p.id}>
-                                    <button
-                                        className="dropdown-item"
-                                        onClick={() => {
-                                            onNavigate(`/projects/${p.slug}`)
-                                        }}
-                                    >
-                                        {p.title}
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </div>
-
-                <div className="header-dropdown-wrap" ref={galleryRef}>
-                    <button
-                        className="nav-link dropdown-toggle"
-                        onClick={() => toggle('gallery')}
-                        aria-expanded={visibleDropdown === 'gallery'}
-                    >
-                        Gallery
-                        <HiChevronDown className={`toggle-arrow${visibleDropdown === 'gallery' ? ' open' : ''}`} />
-                    </button>
-                    {visibleDropdown === 'gallery' && (
-                        <ul className="header-dropdown">
-                            {gallerySections.map((s) => (
-                                <li key={s.slug}>
-                                    <button
-                                        className="dropdown-item"
-                                        onClick={() => {
-                                            onNavigate(`/gallery/${s.slug}`)
-                                        }}
-                                    >
-                                        {s.title}
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </div>
-
-                <Link
-                    to="/guests"
-                    className={`nav-link${location.pathname === '/guests' ? ' active' : ''}`}
-                >
-                    Guests
-                </Link>
-
-                {navLinks.slice(1).map((item) => (
+                <nav className="header-nav">
                     <Link
-                        key={item.path}
-                        to={item.path}
-                        className={`nav-link${location.pathname === item.path ? ' active' : ''}`}
+                        to={navLinks[0].path}
+                        className={`nav-link${location.pathname === navLinks[0].path ? ' active' : ''}`}
                     >
-                        {item.label}
+                        {navLinks[0].label}
                     </Link>
-                ))}
-            </nav>
 
-            {mobileMenuOpen && (
-                <>
-                    <button className="mobile-menu-backdrop" aria-label="Close navigation" onClick={closeMobileMenu} />
-                    <aside
-                        className="mobile-menu-panel"
-                        aria-label="Mobile navigation"
-                        onClick={(e) => e.stopPropagation()}
-                        onMouseDown={(e) => e.stopPropagation()}
-                        onTouchStart={(e) => e.stopPropagation()}
+                    <div className="header-dropdown-wrap" ref={projectsRef}>
+                        <button
+                            className="nav-link dropdown-toggle"
+                            onClick={() => toggle('projects')}
+                            aria-expanded={visibleDropdown === 'projects'}
+                        >
+                            Projects
+                            <HiChevronDown className={`toggle-arrow${visibleDropdown === 'projects' ? ' open' : ''}`} />
+                        </button>
+                        {visibleDropdown === 'projects' && (
+                            <ul className="header-dropdown">
+                                {publicProjects.map((p) => (
+                                    <li key={p.id}>
+                                        <button
+                                            className="dropdown-item"
+                                            onClick={() => {
+                                                onNavigate(`/projects/${p.slug}`)
+                                            }}
+                                        >
+                                            {p.title}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+
+                    <div className="header-dropdown-wrap" ref={galleryRef}>
+                        <button
+                            className="nav-link dropdown-toggle"
+                            onClick={() => toggle('gallery')}
+                            aria-expanded={visibleDropdown === 'gallery'}
+                        >
+                            Gallery
+                            <HiChevronDown className={`toggle-arrow${visibleDropdown === 'gallery' ? ' open' : ''}`} />
+                        </button>
+                        {visibleDropdown === 'gallery' && (
+                            <ul className="header-dropdown">
+                                {gallerySections.map((s) => (
+                                    <li key={s.slug}>
+                                        <button
+                                            className="dropdown-item"
+                                            onClick={() => {
+                                                onNavigate(`/gallery/${s.slug}`)
+                                            }}
+                                        >
+                                            {s.title}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+
+                    <Link
+                        to="/guests"
+                        className={`nav-link${location.pathname === '/guests' ? ' active' : ''}`}
                     >
-                        <div className="mobile-menu-section">
-                            <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate('/home')}>
-                                <HiHome className="mobile-menu-icon" aria-hidden="true" />
-                                <span>Home</span>
-                            </button>
-                            <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate('/about')}>
-                                <HiInformationCircle className="mobile-menu-icon" aria-hidden="true" />
-                                <span>About</span>
-                            </button>
-                            <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate('/guests')}>
-                                <HiUsers className="mobile-menu-icon" aria-hidden="true" />
-                                <span>Guests</span>
-                            </button>
-                        </div>
+                        Guests
+                    </Link>
 
-                        <div className="mobile-menu-section">
-                            <button className="mobile-menu-accordion" onClick={() => toggleMobileSection('projects')}>
-                                <span className="mobile-menu-accordion-label">
-                                    <HiFolder className="mobile-menu-icon" aria-hidden="true" />
-                                    <span>Projects</span>
-                                </span>
-                                <HiChevronDown className={`mobile-menu-chevron${mobileExpanded.projects ? ' open' : ''}`} aria-hidden="true" />
-                            </button>
-                            {mobileExpanded.projects && (
-                                <div className="mobile-menu-sublist">
-                                    {publicProjects.map((project) => (
-                                        <button
-                                            key={project.id}
-                                            className="mobile-menu-link"
-                                            onClick={() => onNavigate(`/projects/${project.slug}`)}
-                                        >
-                                            {project.title}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
+                    {navLinks.slice(1).map((item) => (
+                        <Link
+                            key={item.path}
+                            to={item.path}
+                            className={`nav-link${location.pathname === item.path ? ' active' : ''}`}
+                        >
+                            {item.label}
+                        </Link>
+                    ))}
+                </nav>
 
-                        <div className="mobile-menu-section">
-                            <button className="mobile-menu-accordion" onClick={() => toggleMobileSection('gallery')}>
-                                <span className="mobile-menu-accordion-label">
-                                    <HiPhoto className="mobile-menu-icon" aria-hidden="true" />
-                                    <span>Gallery</span>
-                                </span>
-                                <HiChevronDown className={`mobile-menu-chevron${mobileExpanded.gallery ? ' open' : ''}`} aria-hidden="true" />
-                            </button>
-                            {mobileExpanded.gallery && (
-                                <div className="mobile-menu-sublist">
-                                    {gallerySections.map((section) => (
-                                        <button
-                                            key={section.slug}
-                                            className="mobile-menu-link"
-                                            onClick={() => onNavigate(`/gallery/${section.slug}`)}
-                                        >
-                                            {section.title}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
+                {mobileMenuOpen && (
+                    <>
+                        <button className="mobile-menu-backdrop" aria-label="Close navigation" onClick={closeMobileMenu} />
+                        <aside
+                            className="mobile-menu-panel"
+                            aria-label="Mobile navigation"
+                            onClick={(e) => e.stopPropagation()}
+                            onMouseDown={(e) => e.stopPropagation()}
+                            onTouchStart={(e) => e.stopPropagation()}
+                        >
+                            <div className="mobile-menu-section">
+                                <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate('/home')}>
+                                    <HiHome className="mobile-menu-icon" aria-hidden="true" />
+                                    <span>Home</span>
+                                </button>
+                                <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate('/about')}>
+                                    <HiInformationCircle className="mobile-menu-icon" aria-hidden="true" />
+                                    <span>About</span>
+                                </button>
+                                <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate('/guests')}>
+                                    <HiUsers className="mobile-menu-icon" aria-hidden="true" />
+                                    <span>Guests</span>
+                                </button>
+                            </div>
 
-                    </aside>
-                </>
-            )}
-        </header>
+                            <div className="mobile-menu-section">
+                                <button className="mobile-menu-accordion" onClick={() => toggleMobileSection('projects')}>
+                                    <span className="mobile-menu-accordion-label">
+                                        <HiFolder className="mobile-menu-icon" aria-hidden="true" />
+                                        <span>Projects</span>
+                                    </span>
+                                    <HiChevronDown className={`mobile-menu-chevron${mobileExpanded.projects ? ' open' : ''}`} aria-hidden="true" />
+                                </button>
+                                {mobileExpanded.projects && (
+                                    <div className="mobile-menu-sublist">
+                                        {publicProjects.map((project) => (
+                                            <button
+                                                key={project.id}
+                                                className="mobile-menu-link"
+                                                onClick={() => onNavigate(`/projects/${project.slug}`)}
+                                            >
+                                                {project.title}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="mobile-menu-section">
+                                <button className="mobile-menu-accordion" onClick={() => toggleMobileSection('gallery')}>
+                                    <span className="mobile-menu-accordion-label">
+                                        <HiPhoto className="mobile-menu-icon" aria-hidden="true" />
+                                        <span>Gallery</span>
+                                    </span>
+                                    <HiChevronDown className={`mobile-menu-chevron${mobileExpanded.gallery ? ' open' : ''}`} aria-hidden="true" />
+                                </button>
+                                {mobileExpanded.gallery && (
+                                    <div className="mobile-menu-sublist">
+                                        {gallerySections.map((section) => (
+                                            <button
+                                                key={section.slug}
+                                                className="mobile-menu-link"
+                                                onClick={() => onNavigate(`/gallery/${section.slug}`)}
+                                            >
+                                                {section.title}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                        </aside>
+                    </>
+                )}
+            </header>
+        </>
     )
 }

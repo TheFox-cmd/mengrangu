@@ -1,6 +1,6 @@
 .home-page {
   min-height: 100svh;
-  background: #fdfbf8;
+  background: var(--bg);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -37,7 +37,7 @@
   border-radius: 14px;
   overflow: hidden;
   background: var(--bg-paper);
-  border: 2px solid #f0dfc6;
+  border: 2px solid var(--card-border-strong);
   box-shadow: 0 16px 32px -12px rgba(92, 70, 46, 0.3), 0 8px 16px -10px rgba(92, 70, 46, 0.22);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
@@ -61,8 +61,8 @@
   align-items: center;
   justify-content: center;
   min-height: 52px;
-  background: rgba(255, 247, 235, 0.96);
-  border-top: 1px solid #eed9bb;
+  background: var(--card-meta-bg);
+  border-top: 1px solid var(--card-meta-border);
   color: var(--text-heading);
   font-size: 0.86rem;
   letter-spacing: 0.5px;

@@ -20,6 +20,41 @@
   pointer-events: auto;
 }
 
+.theme-toggle {
+  position: fixed;
+  top: 28px;
+  right: 28px;
+  z-index: 240;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  background: var(--surface-glass-strong);
+  box-shadow: var(--surface-shadow);
+  color: var(--text-heading);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    background: var(--surface-glass-hover);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: 768px) {
+    top: max(12px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
+  }
+}
+
 .mobile-menu-toggle {
   display: none;
   pointer-events: auto;
@@ -31,10 +66,10 @@
     z-index: 240;
     width: 48px;
     height: 48px;
-    border: 1px solid rgba(53, 47, 43, 0.1);
+    border: 1px solid var(--surface-border);
     border-radius: 14px;
-    background: rgba(255, 254, 251, 0.96);
-    box-shadow: 0 8px 20px rgba(50, 42, 35, 0.16);
+    background: var(--surface-glass-strong);
+    box-shadow: var(--surface-shadow);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -61,9 +96,9 @@
   pointer-events: auto;
   padding: 14px 24px;
   border-radius: 999px;
-  background: rgba(255, 254, 251, 0.92);
-  border: 1px solid rgba(53, 47, 43, 0.08);
-  box-shadow: 0 10px 24px rgba(80, 60, 40, 0.08);
+  background: var(--surface-glass);
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--surface-shadow);
   backdrop-filter: blur(12px);
 
   @media (max-width: 768px) {
@@ -168,7 +203,7 @@
     position: fixed;
     inset: 0;
     border: none;
-    background: rgba(30, 26, 22, 0.34);
+    background: var(--overlay-backdrop);
     z-index: 210;
     pointer-events: auto;
   }
@@ -185,7 +220,7 @@
     width: min(356px, calc(100vw - 28px));
     background: var(--bg-paper);
     border-right: 1px solid var(--border);
-    box-shadow: 10px 0 34px rgba(50, 42, 35, 0.26);
+    box-shadow: var(--surface-shadow-strong);
     z-index: 220;
     display: block;
     overflow-y: auto;
@@ -202,7 +237,7 @@
   margin-bottom: 10px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fffdf9;
+  background: var(--bg-paper);
 }
 
 .mobile-menu-title {
@@ -225,7 +260,7 @@
   border-radius: 10px;
 
   &:hover {
-    background: #f9f1e7;
+    background: var(--surface-hover);
   }
 }
 
@@ -253,7 +288,7 @@
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: #fff;
+  background: var(--bg-paper);
   padding: 10px 10px;
   font: inherit;
   color: var(--text-heading);
