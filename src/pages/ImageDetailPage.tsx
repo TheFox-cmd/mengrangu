@@ -85,7 +85,9 @@ export default function ImageDetailPage() {
     const imageName = (() => {
         const src = images[idx] ?? ''
         const decoded = decodeURIComponent(src.split('/').pop() ?? '')
-        return decoded.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ')
+        const baseName = decoded.replace(/\.[^.]+$/, '')
+        const withoutBuildHash = baseName.replace(/-[A-Za-z0-9_]{6,}$/, '')
+        return withoutBuildHash.replace(/[-_]/g, ' ').trim()
     })()
 
     return (

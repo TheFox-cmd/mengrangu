@@ -61,15 +61,17 @@
   letter-spacing: 1px;
   text-transform: uppercase;
   padding: 12px 24px;
-  border: none;
+  border: 2px solid #e6d3b8;
   border-radius: 8px;
-  background: var(--bg-paper);
+  background: #fef8ef;
   color: var(--text-heading);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  box-shadow: 0 4px 12px rgba(150, 118, 84, 0.18);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 
   &:hover {
-    background: var(--accent-hover);
+    background: #f8ead6;
+    border-color: #d8bc97;
   }
 }
 
