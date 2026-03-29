@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import BackButton from '../components/BackButton'
+import Footer from '../components/Footer'
 import { guestProjects } from '../data/projects'
 import usePageTitle from '../hooks/usePageTitle'
 import './GuestsPage.css'
@@ -16,27 +17,6 @@ export default function GuestsPage() {
     const [selectedSlug, setSelectedSlug] = useState(guestProjects[0]?.slug ?? '')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
-
-    useEffect(() => {
-        const { body, documentElement } = document
-        const previousBodyOverflowX = body.style.overflowX
-        const previousBodyTouchAction = body.style.touchAction
-        const previousHtmlOverflowX = documentElement.style.overflowX
-        const previousHtmlTouchAction = documentElement.style.touchAction
-
-        // Prevent horizontal drag/bounce while browsing the guest view on mobile.
-        body.style.overflowX = 'hidden'
-        body.style.touchAction = 'pan-y'
-        documentElement.style.overflowX = 'hidden'
-        documentElement.style.touchAction = 'pan-y'
-
-        return () => {
-            body.style.overflowX = previousBodyOverflowX
-            body.style.touchAction = previousBodyTouchAction
-            documentElement.style.overflowX = previousHtmlOverflowX
-            documentElement.style.touchAction = previousHtmlTouchAction
-        }
-    }, [])
 
     const selectedProject = guestProjects.find((project) => project.slug === selectedSlug) ?? guestProjects[0]
 
@@ -79,6 +59,7 @@ export default function GuestsPage() {
                     </form>
                     {error && <p className="guests-gate-error">Incorrect password</p>}
                 </div>
+                <Footer />
             </div>
         )
     }
@@ -110,7 +91,7 @@ export default function GuestsPage() {
                             <p className="guests-project-description">{selectedProject.description}</p>
 
                             <div className="detail-gallery">
-                                {selectedProject.images.map((src, index) => (
+                                {selectedProject.images.slice(0, 1).map((src, index) => (
                                     <Link
                                         key={`${selectedProject.slug}-${index}`}
                                         to={`/image/projects/${selectedProject.slug}/${index}`}
@@ -130,6 +111,7 @@ export default function GuestsPage() {
                     </>
                 ) : null}
             </div>
+            <Footer />
         </div>
     )
 }

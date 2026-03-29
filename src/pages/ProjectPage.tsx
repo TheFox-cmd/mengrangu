@@ -77,7 +77,7 @@ export default function ProjectPage() {
 
                 {project.images.length > 0 ? (
                     <div className="detail-gallery">
-                        {project.images.map((src, i) => (
+                        {project.images.slice(0, 1).map((src, i) => (
                             <Link to={`/image/projects/${project.slug}/${i}`} className="detail-gallery-item" key={i}>
                                 <LazyImage
                                     src={src}

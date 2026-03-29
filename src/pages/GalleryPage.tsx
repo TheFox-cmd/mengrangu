@@ -72,7 +72,7 @@ export default function GalleryPage() {
                         {!slug && <h2 className="gallery-section-title">{section.title}</h2>}
                         <p className="gallery-section-desc">{section.description}</p>
                         <div className="detail-gallery">
-                            {section.images.map((src, i) => (
+                            {section.images.slice(0, 1).map((src, i) => (
                                 <Link to={`/image/gallery/${section.slug}/${i}`} className="detail-gallery-item" key={i}>
                                     <LazyImage src={src} alt={`${section.title} ${i + 1}`} eager={i === 0} />
                                 </Link>
