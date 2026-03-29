@@ -86,6 +86,8 @@
   width: 100%;
   max-width: 100%;
   overflow-x: clip;
+  overscroll-behavior-x: none;
+  touch-action: pan-y;
 }
 
 .guests-page-header {

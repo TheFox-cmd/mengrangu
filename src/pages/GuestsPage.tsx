@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import { guestProjects } from '../data/projects'
@@ -16,6 +16,27 @@ export default function GuestsPage() {
     const [selectedSlug, setSelectedSlug] = useState(guestProjects[0]?.slug ?? '')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
+
+    useEffect(() => {
+        const { body, documentElement } = document
+        const previousBodyOverflowX = body.style.overflowX
+        const previousBodyTouchAction = body.style.touchAction
+        const previousHtmlOverflowX = documentElement.style.overflowX
+        const previousHtmlTouchAction = documentElement.style.touchAction
+
+        // Prevent horizontal drag/bounce while browsing the guest view on mobile.
+        body.style.overflowX = 'hidden'
+        body.style.touchAction = 'pan-y'
+        documentElement.style.overflowX = 'hidden'
+        documentElement.style.touchAction = 'pan-y'
+
+        return () => {
+            body.style.overflowX = previousBodyOverflowX
+            body.style.touchAction = previousBodyTouchAction
+            documentElement.style.overflowX = previousHtmlOverflowX
+            documentElement.style.touchAction = previousHtmlTouchAction
+        }
+    }, [])
 
     const selectedProject = guestProjects.find((project) => project.slug === selectedSlug) ?? guestProjects[0]
 
