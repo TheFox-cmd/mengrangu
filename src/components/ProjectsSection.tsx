@@ -1,4 +1,4 @@
-import { projects } from '../data/projects'
+import { publicProjects } from '../data/projects'
 import ProjectCard from './ProjectCard'
 import './ProjectsSection.css'
 
@@ -9,7 +9,7 @@ export default function ProjectsSection() {
                 <h2>Selected Works</h2>
             </div>
             <div className="projects-list">
-                {projects.map((project, i) => (
+                {publicProjects.map((project, i) => (
                     <ProjectCard key={project.id} project={project} index={i} />
                 ))}
             </div>

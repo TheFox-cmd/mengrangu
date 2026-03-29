@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { gallerySections } from '../data/gallery'
-import { projects } from '../data/projects'
+import { guestProjects, publicProjects } from '../data/projects'
 import './Header.css'
 
 const navLinks = [
+    { label: 'Home', path: '/home' },
     { label: 'About', path: '/about' },
-    { label: 'Guests', path: '/guests' },
 ]
 
 export default function Header() {
@@ -14,8 +14,10 @@ export default function Header() {
     const navigate = useNavigate()
     const [openDropdown, setOpenDropdown] = useState<string | null>(null)
     const [hidden, setHidden] = useState(false)
+    const [guestUnlocked, setGuestUnlocked] = useState(() => sessionStorage.getItem('guests-auth') === 'true')
     const projectsRef = useRef<HTMLDivElement>(null)
     const galleryRef = useRef<HTMLDivElement>(null)
+    const guestsRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const onScroll = () => {
@@ -30,7 +32,8 @@ export default function Header() {
             const target = e.target as Node
             if (
                 projectsRef.current && !projectsRef.current.contains(target) &&
-                galleryRef.current && !galleryRef.current.contains(target)
+                galleryRef.current && !galleryRef.current.contains(target) &&
+                guestsRef.current && !guestsRef.current.contains(target)
             ) {
                 setOpenDropdown(null)
             }
@@ -39,12 +42,38 @@ export default function Header() {
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
+    useEffect(() => {
+        const syncGuestAccess = () => {
+            setGuestUnlocked(sessionStorage.getItem('guests-auth') === 'true')
+        }
+
+        syncGuestAccess()
+        window.addEventListener('storage', syncGuestAccess)
+        window.addEventListener('guest-auth-changed', syncGuestAccess as EventListener)
+
+        return () => {
+            window.removeEventListener('storage', syncGuestAccess)
+            window.removeEventListener('guest-auth-changed', syncGuestAccess as EventListener)
+        }
+    }, [])
+
+    useEffect(() => {
+        setOpenDropdown(null)
+    }, [location.pathname])
+
     const toggle = (name: string) =>
         setOpenDropdown((prev) => (prev === name ? null : name))
 
     return (
         <header className={`header${hidden ? ' header--hidden' : ''}`}>
             <nav className="header-nav">
+                <Link
+                    to={navLinks[0].path}
+                    className={`nav-link${location.pathname === navLinks[0].path ? ' active' : ''}`}
+                >
+                    {navLinks[0].label}
+                </Link>
+
                 <div className="header-dropdown-wrap" ref={projectsRef}>
                     <button
                         className="nav-link dropdown-toggle"
@@ -58,7 +87,7 @@ export default function Header() {
                     </button>
                     {openDropdown === 'projects' && (
                         <ul className="header-dropdown">
-                            {projects.map((p) => (
+                            {publicProjects.map((p) => (
                                 <li key={p.id}>
                                     <button
                                         className="dropdown-item"
@@ -105,7 +134,48 @@ export default function Header() {
                     )}
                 </div>
 
-                {navLinks.map((item) => (
+                <div className="header-dropdown-wrap" ref={guestsRef}>
+                    {guestUnlocked ? (
+                        <>
+                            <button
+                                className="nav-link dropdown-toggle"
+                                onClick={() => toggle('guests')}
+                                aria-expanded={openDropdown === 'guests'}
+                            >
+                                Guests
+                                <svg className={`toggle-arrow${openDropdown === 'guests' ? ' open' : ''}`} viewBox="0 0 12 8" width="10" height="6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="1 1 6 6 11 1" />
+                                </svg>
+                            </button>
+                            {openDropdown === 'guests' && (
+                                <ul className="header-dropdown">
+                                    {guestProjects.map((project) => (
+                                        <li key={project.id}>
+                                            <button
+                                                className="dropdown-item"
+                                                onClick={() => {
+                                                    navigate(`/projects/${project.slug}`)
+                                                    setOpenDropdown(null)
+                                                }}
+                                            >
+                                                {project.title}
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </>
+                    ) : (
+                        <Link
+                            to="/guests"
+                            className={`nav-link${location.pathname === '/guests' ? ' active' : ''}`}
+                        >
+                            Guests
+                        </Link>
+                    )}
+                </div>
+
+                {navLinks.slice(1).map((item) => (
                     <Link
                         key={item.path}
                         to={item.path}

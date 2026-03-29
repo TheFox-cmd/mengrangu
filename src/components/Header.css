@@ -24,9 +24,20 @@
   gap: 40px;
   align-items: center;
   pointer-events: auto;
+  padding: 14px 24px;
+  border-radius: 999px;
+  background: rgba(255, 254, 251, 0.92);
+  border: 1px solid rgba(53, 47, 43, 0.08);
+  box-shadow: 0 10px 24px rgba(80, 60, 40, 0.08);
+  backdrop-filter: blur(12px);
 
   @media (max-width: 768px) {
-    gap: 20px;
+    gap: 14px;
+    width: min(100%, 360px);
+    padding: 12px 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-radius: 24px;
   }
 }
 
@@ -87,6 +98,15 @@
   box-shadow: var(--shadow);
   min-width: 200px;
   z-index: 200;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 88px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: min(320px, calc(100vw - 24px));
+  }
 }
 
 .dropdown-item {

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import BackToTop from '../components/BackToTop'
 import Footer from '../components/Footer'
@@ -40,6 +40,10 @@ export default function ProjectPage() {
         )
     }
 
+    if (project.guestOnly && sessionStorage.getItem('guests-auth') !== 'true') {
+        return <Navigate to="/guests" replace />
+    }
+
     return (
         <div className="project-page">
             <BackButton />
@@ -52,9 +56,9 @@ export default function ProjectPage() {
                 <p className="project-description">{project.description}</p>
 
                 {project.images.length > 0 ? (
-                    <div className="masonry-gallery">
+                    <div className="detail-gallery">
                         {project.images.map((src, i) => (
-                            <Link to={`/image/projects/${project.slug}/${i}`} className="masonry-item" key={i}>
+                            <Link to={`/image/projects/${project.slug}/${i}`} className="detail-gallery-item" key={i}>
                                 <LazyImage src={src} alt={`${project.title} work ${i + 1}`} />
                             </Link>
                         ))}

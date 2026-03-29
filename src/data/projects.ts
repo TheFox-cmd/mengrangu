@@ -34,6 +34,7 @@ export interface Project {
   color: string
   description: string
   images: string[]
+  guestOnly?: boolean
 }
 
 export const projects: Project[] = [
@@ -74,6 +75,7 @@ export const projects: Project[] = [
     brief: 'Character skins, props & banner art for Wild Sky',
     slug: 'wild-sky',
     color: '#A89B8C',
+    guestOnly: true,
     description:
       'A collection of character skin designs, prop concepts, and promotional banner art created for the Wild Sky project. Includes awaken skins, Halloween variants, and hero concept art.',
     images: [
@@ -116,3 +118,6 @@ export const projects: Project[] = [
     ],
   },
 ]
+
+export const publicProjects = projects.filter((p) => !p.guestOnly)
+export const guestProjects = projects.filter((p) => p.guestOnly)

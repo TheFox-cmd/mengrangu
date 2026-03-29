@@ -51,9 +51,9 @@ export default function GalleryPage() {
                     <div className="gallery-section" key={section.slug} id={section.slug}>
                         {!slug && <h2 className="gallery-section-title">{section.title}</h2>}
                         <p className="gallery-section-desc">{section.description}</p>
-                        <div className="masonry-gallery">
+                        <div className="detail-gallery">
                             {section.images.map((src, i) => (
-                                <Link to={`/image/gallery/${section.slug}/${i}`} className="masonry-item" key={i}>
+                                <Link to={`/image/gallery/${section.slug}/${i}`} className="detail-gallery-item" key={i}>
                                     <LazyImage src={src} alt={`${section.title} ${i + 1}`} />
                                 </Link>
                             ))}

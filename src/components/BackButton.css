@@ -6,8 +6,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: none;
-  border: none;
+  background: rgba(255, 254, 251, 0.92);
+  border: 1px solid rgba(53, 47, 43, 0.08);
+  border-radius: 999px;
   cursor: pointer;
   font-family: var(--font-body);
   font-size: 0.8rem;
@@ -15,12 +16,14 @@
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--text-heading);
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
-  padding: 4px 0;
+  opacity: 0.95;
+  transition: opacity 0.3s ease, background-color 0.2s ease;
+  padding: 10px 14px;
+  box-shadow: 0 8px 18px rgba(80, 60, 40, 0.08);
 
   &:hover {
     opacity: 1;
+    background: rgba(255, 254, 251, 1);
   }
 
   svg {
@@ -30,5 +33,9 @@
   @media (max-width: 768px) {
     top: 20px;
     left: 14px;
+
+    span {
+      display: none;
+    }
   }
 }

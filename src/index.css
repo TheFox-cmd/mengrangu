@@ -3,6 +3,7 @@
   --bg-paper: #FFFEFB;
   --text: #4A4440;
   --text-muted: #9E9690;
+  --text-muted-strong: #6E6259;
   --text-heading: #352F2B;
   --accent: #D4B896;
   --accent-hover: #C4A57E;
@@ -34,6 +35,7 @@
 
 body {
   margin: 0;
+  background: var(--bg);
 }
 
 #root {

@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import { gallerySections } from '../data/gallery'
 import { projects } from '../data/projects'
@@ -15,6 +15,7 @@ export default function ImageDetailPage() {
     let sectionTitle = ''
     let basePath = ''
     let sectionColor = '#E8E0D8'
+    let isGuestOnly = false
 
     if (type === 'projects') {
         const project = projects.find((p) => p.slug === slug)
@@ -23,6 +24,7 @@ export default function ImageDetailPage() {
             sectionTitle = project.title
             basePath = `/projects/${slug}`
             sectionColor = project.color
+            isGuestOnly = !!project.guestOnly
         }
     } else if (type === 'gallery') {
         const section = gallerySections.find((s) => s.slug === slug)
@@ -52,6 +54,10 @@ export default function ImageDetailPage() {
         window.addEventListener('keydown', handleKey)
         return () => window.removeEventListener('keydown', handleKey)
     }, [idx, hasPrev, hasNext, goTo])
+
+    if (isGuestOnly && sessionStorage.getItem('guests-auth') !== 'true') {
+        return <Navigate to="/guests" replace />
+    }
 
     if (!images.length || idx < 0 || idx >= images.length) {
         return (

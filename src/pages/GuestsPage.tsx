@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import BackButton from '../components/BackButton'
+import { guestProjects } from '../data/projects'
 import usePageTitle from '../hooks/usePageTitle'
 import './GuestsPage.css'
 
@@ -11,13 +13,17 @@ export default function GuestsPage() {
     const [authenticated, setAuthenticated] = useState(
         () => sessionStorage.getItem(SESSION_KEY) === 'true',
     )
+    const [selectedSlug, setSelectedSlug] = useState(guestProjects[0]?.slug ?? '')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
+
+    const selectedProject = guestProjects.find((project) => project.slug === selectedSlug) ?? guestProjects[0]
 
     const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (password === GUEST_PASSWORD) {
             sessionStorage.setItem(SESSION_KEY, 'true')
+            window.dispatchEvent(new Event('guest-auth-changed'))
             setAuthenticated(true)
             setError(false)
         } else {
@@ -61,10 +67,46 @@ export default function GuestsPage() {
             <BackButton />
             <div className="guests-page-header">
                 <h1>Guests</h1>
-                <p className="guests-page-subtitle">Welcome! This is a private space.</p>
+                <p className="guests-page-subtitle">Unlocked work with a private project selector.</p>
             </div>
             <div className="guests-content">
-                <p>Content coming soon.</p>
+                {selectedProject ? (
+                    <>
+                        <label className="guests-project-picker">
+                            <span>Project</span>
+                            <select value={selectedProject.slug} onChange={(e) => setSelectedSlug(e.target.value)}>
+                                {guestProjects.map((project) => (
+                                    <option key={project.id} value={project.slug}>
+                                        {project.title}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+
+                        <div className="guests-project-detail">
+                            <h2>{selectedProject.title}</h2>
+                            <p className="guests-project-brief">{selectedProject.brief}</p>
+                            <p className="guests-project-description">{selectedProject.description}</p>
+
+                            <div className="detail-gallery">
+                                {selectedProject.images.map((src, index) => (
+                                    <Link
+                                        key={`${selectedProject.slug}-${index}`}
+                                        to={`/image/projects/${selectedProject.slug}/${index}`}
+                                        className="detail-gallery-item"
+                                    >
+                                        <img
+                                            src={src}
+                                            alt={`${selectedProject.title} ${index + 1}`}
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    </>
+                ) : null}
             </div>
         </div>
     )
