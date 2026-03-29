@@ -1,23 +1,45 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import { gallerySections } from '../data/gallery'
-import { projects } from '../data/projects'
+import { guestProjects, projects, publicProjects } from '../data/projects'
 import usePageTitle from '../hooks/usePageTitle'
 import './ImageDetailPage.css'
 
 export default function ImageDetailPage() {
-    const { type, slug, index } = useParams<{ type: string; slug: string; index: string }>()
+    const { type, slug, index } = useParams<{ type?: string; slug?: string; index?: string }>()
     const navigate = useNavigate()
     const idx = Number(index)
+    const isHomeFlow = type === undefined && slug === undefined
+    const guestUnlocked = sessionStorage.getItem('guests-auth') === 'true'
+
+    const homeImageSet = useMemo(() => {
+        const visibleProjects = guestUnlocked ? [...publicProjects, ...guestProjects] : publicProjects
+        return visibleProjects.flatMap((project) =>
+            project.images.map((src, imageIndex) => ({
+                src,
+                imageIndex,
+                projectSlug: project.slug,
+                projectTitle: project.title,
+                projectColor: project.color,
+            })),
+        )
+    }, [guestUnlocked])
 
     let images: string[] = []
     let sectionTitle = ''
     let basePath = ''
     let sectionColor = '#E8E0D8'
     let isGuestOnly = false
+    let backLabel = ''
 
-    if (type === 'projects') {
+    if (isHomeFlow) {
+        images = homeImageSet.map((entry) => entry.src)
+        sectionTitle = 'Home'
+        basePath = '/home'
+        sectionColor = homeImageSet[idx]?.projectColor ?? '#E8E0D8'
+        backLabel = 'Home'
+    } else if (type === 'projects') {
         const project = projects.find((p) => p.slug === slug)
         if (project) {
             images = project.images
@@ -25,6 +47,7 @@ export default function ImageDetailPage() {
             basePath = `/projects/${slug}`
             sectionColor = project.color
             isGuestOnly = !!project.guestOnly
+            backLabel = project.title
         }
     } else if (type === 'gallery') {
         const section = gallerySections.find((s) => s.slug === slug)
@@ -33,6 +56,7 @@ export default function ImageDetailPage() {
             sectionTitle = section.title
             basePath = `/gallery/${slug}`
             sectionColor = section.color
+            backLabel = section.title
         }
     }
 
@@ -41,10 +65,14 @@ export default function ImageDetailPage() {
     const hasPrev = idx > 0
     const hasNext = idx < images.length - 1
 
-    const goTo = useCallback(
-        (i: number) => navigate(`/image/${type}/${slug}/${i}`, { replace: true }),
-        [navigate, type, slug],
-    )
+    const goTo = useCallback((i: number) => {
+        if (isHomeFlow) {
+            navigate(`/image/home/${i}`, { replace: true })
+            return
+        }
+
+        navigate(`/image/${type}/${slug}/${i}`, { replace: true })
+    }, [navigate, isHomeFlow, type, slug])
 
     useEffect(() => {
         const preload = (src?: string) => {
@@ -107,7 +135,7 @@ export default function ImageDetailPage() {
                     <div className="image-detail-center">
                         <img
                             src={images[idx]}
-                            alt={`${sectionTitle} ${idx + 1}`}
+                            alt={`${isHomeFlow ? (homeImageSet[idx]?.projectTitle ?? 'Home') : sectionTitle} ${idx + 1}`}
                             className="image-detail-img"
                             loading="eager"
                             fetchPriority="high"
@@ -151,7 +179,7 @@ export default function ImageDetailPage() {
                 <div className="image-detail-meta">
                     <p className="image-detail-counter">{idx + 1} / {images.length}</p>
                     <Link to={basePath} className="image-detail-back-link">
-                        ← Back to {sectionTitle}
+                        ← Back to {backLabel || sectionTitle}
                     </Link>
                 </div>
             </div>

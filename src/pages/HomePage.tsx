@@ -1,15 +1,34 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import BackToTop from '../components/BackToTop'
 import Footer from '../components/Footer'
-import { publicProjects } from '../data/projects'
+import { guestProjects, publicProjects } from '../data/projects'
 import usePageTitle from '../hooks/usePageTitle'
 import './HomePage.css'
 
 export default function HomePage() {
     usePageTitle('Home')
 
-    const homeImages = publicProjects.flatMap((project) =>
+    const [guestUnlocked, setGuestUnlocked] = useState(() => sessionStorage.getItem('guests-auth') === 'true')
+
+    useEffect(() => {
+        const syncGuestAccess = () => {
+            setGuestUnlocked(sessionStorage.getItem('guests-auth') === 'true')
+        }
+
+        window.addEventListener('storage', syncGuestAccess)
+        window.addEventListener('guest-auth-changed', syncGuestAccess as EventListener)
+
+        return () => {
+            window.removeEventListener('storage', syncGuestAccess)
+            window.removeEventListener('guest-auth-changed', syncGuestAccess as EventListener)
+        }
+    }, [])
+
+    const visibleProjects = guestUnlocked ? [...publicProjects, ...guestProjects] : publicProjects
+
+    const homeImages = visibleProjects.flatMap((project) =>
         project.images.map((src, index) => ({
             src,
             index,
@@ -25,7 +44,7 @@ export default function HomePage() {
                 <div className="home-masonry-gallery">
                     {homeImages.map((image, listIndex) => (
                         <Link
-                            to={`/image/projects/${image.projectSlug}/${image.index}`}
+                            to={`/image/home/${listIndex}`}
                             className="home-masonry-item"
                             key={`${image.projectSlug}-${image.index}`}
                         >

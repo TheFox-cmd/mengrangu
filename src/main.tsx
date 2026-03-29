@@ -24,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="gallery/:slug" element={<GalleryPage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="guests" element={<GuestsPage />} />
+        <Route path="image/home/:index" element={<ImageDetailPage />} />
         <Route path="image/:type/:slug/:index" element={<ImageDetailPage />} />
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
