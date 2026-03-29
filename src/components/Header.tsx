@@ -115,7 +115,7 @@ export default function Header() {
     }
 
     return (
-        <header className={`header${hidden ? ' header--hidden' : ''}`}>
+        <header className={`header${hidden && !mobileMenuOpen ? ' header--hidden' : ''}${mobileMenuOpen ? ' header--menu-open' : ''}`}>
             <button
                 className="mobile-menu-toggle"
                 onClick={(e) => {
