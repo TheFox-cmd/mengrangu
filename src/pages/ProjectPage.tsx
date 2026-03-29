@@ -7,7 +7,7 @@ import { projects } from '../data/projects'
 import usePageTitle from '../hooks/usePageTitle'
 import './ProjectPage.css'
 
-function LazyImage({ src, alt }: { src: string; alt: string }) {
+function LazyImage({ src, alt, eager = false }: { src: string; alt: string; eager?: boolean }) {
     const imgRef = useRef<HTMLImageElement>(null)
 
     useEffect(() => {
@@ -22,7 +22,17 @@ function LazyImage({ src, alt }: { src: string; alt: string }) {
         return () => img.removeEventListener('load', onLoad)
     }, [])
 
-    return <img ref={imgRef} src={src} alt={alt} loading="lazy" className="fade-img" />
+    return (
+        <img
+            ref={imgRef}
+            src={src}
+            alt={alt}
+            loading={eager ? 'eager' : 'lazy'}
+            fetchPriority={eager ? 'high' : 'low'}
+            decoding="async"
+            className="fade-img"
+        />
+    )
 }
 
 export default function ProjectPage() {
@@ -59,7 +69,7 @@ export default function ProjectPage() {
                     <div className="detail-gallery">
                         {project.images.map((src, i) => (
                             <Link to={`/image/projects/${project.slug}/${i}`} className="detail-gallery-item" key={i}>
-                                <LazyImage src={src} alt={`${project.title} work ${i + 1}`} />
+                                <LazyImage src={src} alt={`${project.title} work ${i + 1}`} eager={i === 0} />
                             </Link>
                         ))}
                     </div>

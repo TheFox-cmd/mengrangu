@@ -47,6 +47,18 @@ export default function ImageDetailPage() {
     )
 
     useEffect(() => {
+        const preload = (src?: string) => {
+            if (!src) return
+            const img = new Image()
+            img.decoding = 'async'
+            img.src = src
+        }
+
+        preload(images[idx + 1])
+        preload(images[idx - 1])
+    }, [images, idx])
+
+    useEffect(() => {
         const handleKey = (e: KeyboardEvent) => {
             if (e.key === 'ArrowLeft' && hasPrev) goTo(idx - 1)
             if (e.key === 'ArrowRight' && hasNext) goTo(idx + 1)
@@ -91,7 +103,14 @@ export default function ImageDetailPage() {
                     )}
 
                     <div className="image-detail-center">
-                        <img src={images[idx]} alt={`${sectionTitle} ${idx + 1}`} className="image-detail-img" />
+                        <img
+                            src={images[idx]}
+                            alt={`${sectionTitle} ${idx + 1}`}
+                            className="image-detail-img"
+                            loading="eager"
+                            fetchPriority="high"
+                            decoding="async"
+                        />
                         <p className="image-detail-caption">{imageName}</p>
                     </div>
 

@@ -27,11 +27,12 @@ export default function HomePage() {
                             className="home-masonry-item"
                             key={`${image.projectSlug}-${image.index}`}
                         >
+                            {/** Prioritize first viewport batch, lazy-load the remaining heavy images. */}
                             <img
                                 src={image.src}
                                 alt={`${image.projectTitle} ${image.index + 1}`}
-                                loading="eager"
-                                fetchPriority="high"
+                                loading={image.index < 2 ? 'eager' : 'lazy'}
+                                fetchPriority={image.index < 2 ? 'high' : 'low'}
                                 decoding="async"
                             />
                             <div className="home-masonry-meta">

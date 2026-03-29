@@ -98,7 +98,8 @@ export default function GuestsPage() {
                                         <img
                                             src={src}
                                             alt={`${selectedProject.title} ${index + 1}`}
-                                            loading="lazy"
+                                            loading={index === 0 ? 'eager' : 'lazy'}
+                                            fetchPriority={index === 0 ? 'high' : 'low'}
                                             decoding="async"
                                         />
                                     </Link>

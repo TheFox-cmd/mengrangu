@@ -1,10 +1,3 @@
 general: 
 1. populate links
 2. private git
-
-phone screen: 
-1. lazy load images
-2. remove back button phone
-3. burger icon phone
-4. disable y scroll on individual image phone
-5. left right visibility phone
