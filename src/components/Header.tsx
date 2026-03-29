@@ -82,18 +82,6 @@ export default function Header() {
     const visibleDropdown = openDropdown.pathname === location.pathname ? openDropdown.name : null
     const mobileMenuOpen = mobileMenu.pathname === location.pathname && mobileMenu.open
 
-    useEffect(() => {
-        if (!mobileMenuOpen) {
-            document.body.style.overflow = ''
-            return
-        }
-
-        document.body.style.overflow = 'hidden'
-        return () => {
-            document.body.style.overflow = ''
-        }
-    }, [mobileMenuOpen])
-
     const toggle = (name: string) =>
         setOpenDropdown((prev) => ({
             name: prev.pathname === location.pathname && prev.name === name ? null : name,

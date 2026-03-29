@@ -39,14 +39,16 @@ body {
   margin: 0;
   background: var(--bg);
   overflow-x: hidden;
-  overscroll-behavior: none;
+  overflow-y: auto;
+  overscroll-behavior-x: none;
 }
 
 html {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
-  overscroll-behavior: none;
+  overflow-y: auto;
+  overscroll-behavior-x: none;
 }
 
 #root {
@@ -56,7 +58,8 @@ html {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  overscroll-behavior: none;
+  overflow-y: visible;
+  overscroll-behavior-x: none;
 }
 
 h1, h2, h3 {

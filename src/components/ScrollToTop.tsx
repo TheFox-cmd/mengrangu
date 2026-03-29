@@ -6,6 +6,10 @@ export default function ScrollToTop() {
 
     useLayoutEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+
+        const isImageDetailRoute = pathname.startsWith('/image/')
+        document.documentElement.style.overflow = isImageDetailRoute ? 'hidden' : ''
+        document.body.style.overflow = isImageDetailRoute ? 'hidden' : ''
     }, [pathname])
 
     return null

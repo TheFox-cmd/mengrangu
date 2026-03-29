@@ -7,7 +7,15 @@ import { gallerySections } from '../data/gallery'
 import usePageTitle from '../hooks/usePageTitle'
 import './GalleryPage.css'
 
-function LazyImage({ src, alt, eager = false }: { src: string; alt: string; eager?: boolean }) {
+function LazyImage({
+    src,
+    alt,
+    eager = false,
+}: {
+    src: string
+    alt: string
+    eager?: boolean
+}) {
     const imgRef = useRef<HTMLImageElement>(null)
 
     useEffect(() => {
@@ -17,7 +25,9 @@ function LazyImage({ src, alt, eager = false }: { src: string; alt: string; eage
             img.classList.add('loaded')
             return
         }
-        const onLoad = () => img.classList.add('loaded')
+        const onLoad = () => {
+            img.classList.add('loaded')
+        }
         img.addEventListener('load', onLoad)
         return () => img.removeEventListener('load', onLoad)
     }, [])

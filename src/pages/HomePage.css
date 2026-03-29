@@ -1,5 +1,6 @@
 .home-page {
   min-height: 100svh;
+  background: #fdfbf8;
 }
 
 .home-gallery-section {
@@ -13,23 +14,22 @@
 }
 
 .home-masonry-gallery {
-  columns: 3;
-  column-gap: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
 
   @media (max-width: 1024px) {
-    columns: 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @media (max-width: 600px) {
-    columns: 1;
+    grid-template-columns: 1fr;
   }
 }
 
 .home-masonry-item {
-  break-inside: avoid;
   position: relative;
   display: block;
-  margin-bottom: 18px;
   border-radius: 14px;
   overflow: hidden;
   background: var(--bg-paper);

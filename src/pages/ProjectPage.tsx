@@ -7,7 +7,15 @@ import { projects } from '../data/projects'
 import usePageTitle from '../hooks/usePageTitle'
 import './ProjectPage.css'
 
-function LazyImage({ src, alt, eager = false }: { src: string; alt: string; eager?: boolean }) {
+function LazyImage({
+    src,
+    alt,
+    eager = false,
+}: {
+    src: string
+    alt: string
+    eager?: boolean
+}) {
     const imgRef = useRef<HTMLImageElement>(null)
 
     useEffect(() => {
@@ -17,7 +25,9 @@ function LazyImage({ src, alt, eager = false }: { src: string; alt: string; eage
             img.classList.add('loaded')
             return
         }
-        const onLoad = () => img.classList.add('loaded')
+        const onLoad = () => {
+            img.classList.add('loaded')
+        }
         img.addEventListener('load', onLoad)
         return () => img.removeEventListener('load', onLoad)
     }, [])
@@ -69,7 +79,11 @@ export default function ProjectPage() {
                     <div className="detail-gallery">
                         {project.images.map((src, i) => (
                             <Link to={`/image/projects/${project.slug}/${i}`} className="detail-gallery-item" key={i}>
-                                <LazyImage src={src} alt={`${project.title} work ${i + 1}`} eager={i === 0} />
+                                <LazyImage
+                                    src={src}
+                                    alt={`${project.title} work ${i + 1}`}
+                                    eager={i === 0}
+                                />
                             </Link>
                         ))}
                     </div>
