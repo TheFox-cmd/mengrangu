@@ -40,7 +40,7 @@ body {
   background: var(--bg);
   overflow-x: hidden;
   overflow-y: auto;
-  overscroll-behavior-x: none;
+  overscroll-behavior: none;
 }
 
 html {
@@ -48,7 +48,8 @@ html {
   max-width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  overscroll-behavior-x: none;
+  overscroll-behavior: none;
+  scrollbar-gutter: stable;
 }
 
 #root {
@@ -59,7 +60,6 @@ html {
   flex-direction: column;
   overflow-x: hidden;
   overflow-y: visible;
-  overscroll-behavior-x: none;
 }
 
 h1, h2, h3 {

@@ -97,24 +97,6 @@ export default function ImageDetailPage() {
     }, [images, idx])
 
     useEffect(() => {
-        const { body, documentElement } = document
-        const previousBodyOverflow = body.style.overflow
-        const previousBodyTouchAction = body.style.touchAction
-        const previousHtmlOverflow = documentElement.style.overflow
-
-        // Keep scroll interactions inside the drawer while it is open.
-        body.style.overflow = 'hidden'
-        body.style.touchAction = 'none'
-        documentElement.style.overflow = 'hidden'
-
-        return () => {
-            body.style.overflow = previousBodyOverflow
-            body.style.touchAction = previousBodyTouchAction
-            documentElement.style.overflow = previousHtmlOverflow
-        }
-    }, [])
-
-    useEffect(() => {
         const handleKey = (e: KeyboardEvent) => {
             if (e.key === 'ArrowLeft' && hasPrev) goTo(idx - 1)
             if (e.key === 'ArrowRight' && hasNext) goTo(idx + 1)

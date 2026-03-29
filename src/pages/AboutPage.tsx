@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import resumePdf from '../assets/Resume 2026_new.pdf'
 import BackButton from '../components/BackButton'
 import usePageTitle from '../hooks/usePageTitle'
@@ -6,19 +5,6 @@ import './AboutPage.css'
 
 export default function AboutPage() {
     usePageTitle('About')
-
-    useEffect(() => {
-        const previousHtmlOverflow = document.documentElement.style.overflow
-        const previousBodyOverflow = document.body.style.overflow
-
-        document.documentElement.style.overflow = 'hidden'
-        document.body.style.overflow = 'hidden'
-
-        return () => {
-            document.documentElement.style.overflow = previousHtmlOverflow
-            document.body.style.overflow = previousBodyOverflow
-        }
-    }, [])
 
     return (
         <div className="about-container">
