@@ -95,15 +95,15 @@
 @media (max-width: 768px) {
   .about-container {
     flex-direction: column;
-    height: 100dvh;
-    max-height: 100dvh;
-    min-height: 100svh;
+    height: 100vh;
+    max-height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
   }
 
   .about-image {
-    flex: 0 0 clamp(180px, 36dvh, 44dvh);
-    height: clamp(180px, 36dvh, 44dvh);
+    flex: 0 0 clamp(150px, 31vh, 36vh);
+    height: clamp(150px, 31vh, 36vh);
   }
 
   .about-image img {
@@ -112,33 +112,34 @@
 
   .about-text {
     flex: 1;
-    padding: 20px 22px 18px;
-    justify-content: flex-start;
-    gap: 10px;
+    min-height: 0;
+    padding: 14px 18px 14px;
+    justify-content: center;
+    gap: 8px;
   }
 
   .about-title {
-    font-size: 1.65rem;
+    font-size: 1.5rem;
   }
 
   .about-bio {
-    font-size: 0.86rem;
-    line-height: 1.42;
+    font-size: 0.8rem;
+    line-height: 1.35;
   }
 
   .about-download-cv {
-    margin-top: 2px;
-    padding: 9px 16px;
-    font-size: 0.75rem;
+    margin-top: 0;
+    padding: 8px 14px;
+    font-size: 0.7rem;
   }
 
   .about-links {
-    gap: 12px;
-    margin-top: 2px;
+    gap: 10px;
+    margin-top: 0;
   }
 
   .about-links a {
-    font-size: 0.72rem;
-    letter-spacing: 0.8px;
+    font-size: 0.68rem;
+    letter-spacing: 0.7px;
   }
 }
