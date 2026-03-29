@@ -12,7 +12,10 @@ const navLinks = [
 export default function Header() {
     const location = useLocation()
     const navigate = useNavigate()
-    const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+    const [openDropdown, setOpenDropdown] = useState<{ name: string | null; pathname: string }>({
+        name: null,
+        pathname: location.pathname,
+    })
     const [hidden, setHidden] = useState(false)
     const [guestUnlocked, setGuestUnlocked] = useState(() => sessionStorage.getItem('guests-auth') === 'true')
     const projectsRef = useRef<HTMLDivElement>(null)
@@ -35,12 +38,12 @@ export default function Header() {
                 galleryRef.current && !galleryRef.current.contains(target) &&
                 guestsRef.current && !guestsRef.current.contains(target)
             ) {
-                setOpenDropdown(null)
+                setOpenDropdown({ name: null, pathname: location.pathname })
             }
         }
         document.addEventListener('mousedown', handleClickOutside)
         return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [])
+    }, [location.pathname])
 
     useEffect(() => {
         const syncGuestAccess = () => {
@@ -57,12 +60,13 @@ export default function Header() {
         }
     }, [])
 
-    useEffect(() => {
-        setOpenDropdown(null)
-    }, [location.pathname])
+    const visibleDropdown = openDropdown.pathname === location.pathname ? openDropdown.name : null
 
     const toggle = (name: string) =>
-        setOpenDropdown((prev) => (prev === name ? null : name))
+        setOpenDropdown((prev) => ({
+            name: prev.pathname === location.pathname && prev.name === name ? null : name,
+            pathname: location.pathname,
+        }))
 
     return (
         <header className={`header${hidden ? ' header--hidden' : ''}`}>
@@ -78,14 +82,14 @@ export default function Header() {
                     <button
                         className="nav-link dropdown-toggle"
                         onClick={() => toggle('projects')}
-                        aria-expanded={openDropdown === 'projects'}
+                        aria-expanded={visibleDropdown === 'projects'}
                     >
                         Projects
-                        <svg className={`toggle-arrow${openDropdown === 'projects' ? ' open' : ''}`} viewBox="0 0 12 8" width="10" height="6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <svg className={`toggle-arrow${visibleDropdown === 'projects' ? ' open' : ''}`} viewBox="0 0 12 8" width="10" height="6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                             <polyline points="1 1 6 6 11 1" />
                         </svg>
                     </button>
-                    {openDropdown === 'projects' && (
+                    {visibleDropdown === 'projects' && (
                         <ul className="header-dropdown">
                             {publicProjects.map((p) => (
                                 <li key={p.id}>
@@ -93,7 +97,7 @@ export default function Header() {
                                         className="dropdown-item"
                                         onClick={() => {
                                             navigate(`/projects/${p.slug}`)
-                                            setOpenDropdown(null)
+                                            setOpenDropdown({ name: null, pathname: location.pathname })
                                         }}
                                     >
                                         {p.title}
@@ -108,14 +112,14 @@ export default function Header() {
                     <button
                         className="nav-link dropdown-toggle"
                         onClick={() => toggle('gallery')}
-                        aria-expanded={openDropdown === 'gallery'}
+                        aria-expanded={visibleDropdown === 'gallery'}
                     >
                         Gallery
-                        <svg className={`toggle-arrow${openDropdown === 'gallery' ? ' open' : ''}`} viewBox="0 0 12 8" width="10" height="6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <svg className={`toggle-arrow${visibleDropdown === 'gallery' ? ' open' : ''}`} viewBox="0 0 12 8" width="10" height="6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                             <polyline points="1 1 6 6 11 1" />
                         </svg>
                     </button>
-                    {openDropdown === 'gallery' && (
+                    {visibleDropdown === 'gallery' && (
                         <ul className="header-dropdown">
                             {gallerySections.map((s) => (
                                 <li key={s.slug}>
@@ -123,7 +127,7 @@ export default function Header() {
                                         className="dropdown-item"
                                         onClick={() => {
                                             navigate(`/gallery/${s.slug}`)
-                                            setOpenDropdown(null)
+                                            setOpenDropdown({ name: null, pathname: location.pathname })
                                         }}
                                     >
                                         {s.title}
@@ -140,14 +144,14 @@ export default function Header() {
                             <button
                                 className="nav-link dropdown-toggle"
                                 onClick={() => toggle('guests')}
-                                aria-expanded={openDropdown === 'guests'}
+                                aria-expanded={visibleDropdown === 'guests'}
                             >
                                 Guests
-                                <svg className={`toggle-arrow${openDropdown === 'guests' ? ' open' : ''}`} viewBox="0 0 12 8" width="10" height="6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <svg className={`toggle-arrow${visibleDropdown === 'guests' ? ' open' : ''}`} viewBox="0 0 12 8" width="10" height="6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                                     <polyline points="1 1 6 6 11 1" />
                                 </svg>
                             </button>
-                            {openDropdown === 'guests' && (
+                            {visibleDropdown === 'guests' && (
                                 <ul className="header-dropdown">
                                     {guestProjects.map((project) => (
                                         <li key={project.id}>
@@ -155,7 +159,7 @@ export default function Header() {
                                                 className="dropdown-item"
                                                 onClick={() => {
                                                     navigate(`/projects/${project.slug}`)
-                                                    setOpenDropdown(null)
+                                                    setOpenDropdown({ name: null, pathname: location.pathname })
                                                 }}
                                             >
                                                 {project.title}
