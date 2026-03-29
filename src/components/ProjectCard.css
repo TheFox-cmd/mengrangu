@@ -54,7 +54,7 @@
 .project-number {
   font-family: var(--font-heading);
   font-size: 3rem;
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(47, 41, 36, 0.3);
   position: relative;
   z-index: 1;
 }

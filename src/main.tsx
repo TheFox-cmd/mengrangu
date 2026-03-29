@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Header from './components/Header'
+import ScrollToTop from './components/ScrollToTop'
 import './index.css'
 import AboutPage from './pages/AboutPage'
 import GalleryPage from './pages/GalleryPage'
@@ -13,6 +14,7 @@ import ProjectPage from './pages/ProjectPage'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route index element={<Navigate to="/home" replace />} />

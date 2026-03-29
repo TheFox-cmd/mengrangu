@@ -63,8 +63,8 @@
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
-  background: var(--text-heading);
-  color: #fff;
+  background: var(--bg-paper);
+  color: var(--text-heading);
   cursor: pointer;
   transition: background-color 0.2s ease;
 
@@ -74,7 +74,7 @@
 }
 
 .guests-gate-error {
-  color: #c44;
+  color: var(--text-heading);
   font-size: 0.85rem;
   margin: 12px 0 0;
 }

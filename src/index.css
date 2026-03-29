@@ -1,10 +1,10 @@
 :root {
   --bg: #FFF9F1;
   --bg-paper: #FFFEFB;
-  --text: #4A4440;
-  --text-muted: #9E9690;
-  --text-muted-strong: #6E6259;
-  --text-heading: #352F2B;
+  --text: #2F2924;
+  --text-muted: #2F2924;
+  --text-muted-strong: #2F2924;
+  --text-heading: #2F2924;
   --accent: #D4B896;
   --accent-hover: #C4A57E;
   --border: #F0E8DE;
@@ -81,7 +81,7 @@ p {
 }
 
 a {
-  color: var(--accent-hover);
+  color: var(--text-heading);
   text-decoration: none;
   transition: color 0.2s ease;
 

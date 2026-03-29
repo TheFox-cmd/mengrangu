@@ -1,4 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
+import { HiFolder } from 'react-icons/hi'
+import {
+    HiBars3,
+    HiChevronDown,
+    HiHome,
+    HiInformationCircle,
+    HiPhoto,
+    HiUsers,
+    HiXMark,
+} from 'react-icons/hi2'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { gallerySections } from '../data/gallery'
 import { guestProjects, publicProjects } from '../data/projects'
@@ -125,9 +135,7 @@ export default function Header() {
                 aria-label="Toggle navigation menu"
                 aria-expanded={mobileMenuOpen}
             >
-                <span />
-                <span />
-                <span />
+                {mobileMenuOpen ? <HiXMark /> : <HiBars3 />}
             </button>
 
             <nav className="header-nav">
@@ -145,9 +153,7 @@ export default function Header() {
                         aria-expanded={visibleDropdown === 'projects'}
                     >
                         Projects
-                        <svg className={`toggle-arrow${visibleDropdown === 'projects' ? ' open' : ''}`} viewBox="0 0 12 8" width="10" height="6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="1 1 6 6 11 1" />
-                        </svg>
+                        <HiChevronDown className={`toggle-arrow${visibleDropdown === 'projects' ? ' open' : ''}`} />
                     </button>
                     {visibleDropdown === 'projects' && (
                         <ul className="header-dropdown">
@@ -174,9 +180,7 @@ export default function Header() {
                         aria-expanded={visibleDropdown === 'gallery'}
                     >
                         Gallery
-                        <svg className={`toggle-arrow${visibleDropdown === 'gallery' ? ' open' : ''}`} viewBox="0 0 12 8" width="10" height="6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="1 1 6 6 11 1" />
-                        </svg>
+                        <HiChevronDown className={`toggle-arrow${visibleDropdown === 'gallery' ? ' open' : ''}`} />
                     </button>
                     {visibleDropdown === 'gallery' && (
                         <ul className="header-dropdown">
@@ -205,9 +209,7 @@ export default function Header() {
                                 aria-expanded={visibleDropdown === 'guests'}
                             >
                                 Guests
-                                <svg className={`toggle-arrow${visibleDropdown === 'guests' ? ' open' : ''}`} viewBox="0 0 12 8" width="10" height="6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                    <polyline points="1 1 6 6 11 1" />
-                                </svg>
+                                <HiChevronDown className={`toggle-arrow${visibleDropdown === 'guests' ? ' open' : ''}`} />
                             </button>
                             {visibleDropdown === 'guests' && (
                                 <ul className="header-dropdown">
@@ -259,16 +261,16 @@ export default function Header() {
                     >
                         <div className="mobile-menu-section">
                             <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate('/home')}>
-                                <span className="mobile-menu-icon" aria-hidden="true">&#8962;</span>
+                                <HiHome className="mobile-menu-icon" aria-hidden="true" />
                                 <span>Home</span>
                             </button>
                             <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate('/about')}>
-                                <span className="mobile-menu-icon" aria-hidden="true">i</span>
+                                <HiInformationCircle className="mobile-menu-icon" aria-hidden="true" />
                                 <span>About</span>
                             </button>
                             {!guestUnlocked && (
                                 <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate('/guests')}>
-                                    <span className="mobile-menu-icon" aria-hidden="true">*</span>
+                                    <HiUsers className="mobile-menu-icon" aria-hidden="true" />
                                     <span>Guests</span>
                                 </button>
                             )}
@@ -277,10 +279,10 @@ export default function Header() {
                         <div className="mobile-menu-section">
                             <button className="mobile-menu-accordion" onClick={() => toggleMobileSection('projects')}>
                                 <span className="mobile-menu-accordion-label">
-                                    <span className="mobile-menu-icon" aria-hidden="true">#</span>
+                                    <HiFolder className="mobile-menu-icon" aria-hidden="true" />
                                     <span>Projects</span>
                                 </span>
-                                <span className={`mobile-menu-chevron${mobileExpanded.projects ? ' open' : ''}`} aria-hidden="true">v</span>
+                                <HiChevronDown className={`mobile-menu-chevron${mobileExpanded.projects ? ' open' : ''}`} aria-hidden="true" />
                             </button>
                             {mobileExpanded.projects && (
                                 <div className="mobile-menu-sublist">
@@ -300,10 +302,10 @@ export default function Header() {
                         <div className="mobile-menu-section">
                             <button className="mobile-menu-accordion" onClick={() => toggleMobileSection('gallery')}>
                                 <span className="mobile-menu-accordion-label">
-                                    <span className="mobile-menu-icon" aria-hidden="true">[]</span>
+                                    <HiPhoto className="mobile-menu-icon" aria-hidden="true" />
                                     <span>Gallery</span>
                                 </span>
-                                <span className={`mobile-menu-chevron${mobileExpanded.gallery ? ' open' : ''}`} aria-hidden="true">v</span>
+                                <HiChevronDown className={`mobile-menu-chevron${mobileExpanded.gallery ? ' open' : ''}`} aria-hidden="true" />
                             </button>
                             {mobileExpanded.gallery && (
                                 <div className="mobile-menu-sublist">
@@ -324,10 +326,10 @@ export default function Header() {
                             <div className="mobile-menu-section">
                                 <button className="mobile-menu-accordion" onClick={() => toggleMobileSection('guests')}>
                                     <span className="mobile-menu-accordion-label">
-                                        <span className="mobile-menu-icon" aria-hidden="true">*</span>
+                                        <HiUsers className="mobile-menu-icon" aria-hidden="true" />
                                         <span>Guests</span>
                                     </span>
-                                    <span className={`mobile-menu-chevron${mobileExpanded.guests ? ' open' : ''}`} aria-hidden="true">v</span>
+                                    <HiChevronDown className={`mobile-menu-chevron${mobileExpanded.guests ? ' open' : ''}`} aria-hidden="true" />
                                 </button>
                                 {mobileExpanded.guests && (
                                     <div className="mobile-menu-sublist">

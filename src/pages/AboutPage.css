@@ -60,7 +60,7 @@
 
   &:hover {
     background: var(--text-heading);
-    color: var(--bg);
+    color: var(--text-heading);
   }
 }
 
