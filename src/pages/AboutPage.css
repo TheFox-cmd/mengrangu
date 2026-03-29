@@ -95,13 +95,15 @@
 @media (max-width: 768px) {
   .about-container {
     flex-direction: column;
-    height: 100svh;
-    max-height: 100svh;
+    height: 100dvh;
+    max-height: 100dvh;
+    min-height: 100svh;
     overflow: hidden;
   }
 
   .about-image {
-    flex: 0 0 38svh;
+    flex: 0 0 clamp(180px, 36dvh, 44dvh);
+    height: clamp(180px, 36dvh, 44dvh);
   }
 
   .about-image img {

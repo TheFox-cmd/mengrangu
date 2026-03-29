@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import BackToTop from '../components/BackToTop'
 import Footer from '../components/Footer'
+import { gallerySections } from '../data/gallery'
 import { guestProjects, publicProjects } from '../data/projects'
 import usePageTitle from '../hooks/usePageTitle'
 import './HomePage.css'
@@ -28,14 +29,25 @@ export default function HomePage() {
 
     const visibleProjects = guestUnlocked ? [...publicProjects, ...guestProjects] : publicProjects
 
-    const homeImages = visibleProjects.flatMap((project) =>
+    const projectImages = visibleProjects.flatMap((project) =>
         project.images.map((src, index) => ({
             src,
             index,
-            projectSlug: project.slug,
-            projectTitle: project.title,
+            sourceKey: `project-${project.slug}`,
+            sourceTitle: project.title,
         })),
     )
+
+    const galleryImages = gallerySections.flatMap((section) =>
+        section.images.map((src, index) => ({
+            src,
+            index,
+            sourceKey: `gallery-${section.slug}`,
+            sourceTitle: section.title,
+        })),
+    )
+
+    const homeImages = [...projectImages, ...galleryImages]
 
     return (
         <div className="home-page">
@@ -46,17 +58,17 @@ export default function HomePage() {
                         <Link
                             to={`/image/home/${listIndex}`}
                             className="home-masonry-item"
-                            key={`${image.projectSlug}-${image.index}`}
+                            key={`${image.sourceKey}-${image.index}`}
                         >
                             <img
                                 src={image.src}
-                                alt={`${image.projectTitle} ${image.index + 1}`}
+                                alt={`${image.sourceTitle} ${image.index + 1}`}
                                 loading={listIndex < 3 ? 'eager' : 'lazy'}
                                 fetchPriority={listIndex < 3 ? 'high' : 'low'}
                                 decoding="async"
                             />
                             <div className="home-masonry-meta">
-                                <span>{image.projectTitle}</span>
+                                <span>{image.sourceTitle}</span>
                             </div>
                         </Link>
                     ))}

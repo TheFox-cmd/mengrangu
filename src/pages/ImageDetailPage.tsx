@@ -15,15 +15,25 @@ export default function ImageDetailPage() {
 
     const homeImageSet = useMemo(() => {
         const visibleProjects = guestUnlocked ? [...publicProjects, ...guestProjects] : publicProjects
-        return visibleProjects.flatMap((project) =>
+        const projectEntries = visibleProjects.flatMap((project) =>
             project.images.map((src, imageIndex) => ({
                 src,
                 imageIndex,
-                projectSlug: project.slug,
-                projectTitle: project.title,
-                projectColor: project.color,
+                sourceTitle: project.title,
+                sourceColor: project.color,
             })),
         )
+
+        const galleryEntries = gallerySections.flatMap((section) =>
+            section.images.map((src, imageIndex) => ({
+                src,
+                imageIndex,
+                sourceTitle: section.title,
+                sourceColor: section.color,
+            })),
+        )
+
+        return [...projectEntries, ...galleryEntries]
     }, [guestUnlocked])
 
     let images: string[] = []
@@ -37,7 +47,7 @@ export default function ImageDetailPage() {
         images = homeImageSet.map((entry) => entry.src)
         sectionTitle = 'Home'
         basePath = '/home'
-        sectionColor = homeImageSet[idx]?.projectColor ?? '#E8E0D8'
+        sectionColor = homeImageSet[idx]?.sourceColor ?? '#E8E0D8'
         backLabel = 'Home'
     } else if (type === 'projects') {
         const project = projects.find((p) => p.slug === slug)
@@ -135,7 +145,7 @@ export default function ImageDetailPage() {
                     <div className="image-detail-center">
                         <img
                             src={images[idx]}
-                            alt={`${isHomeFlow ? (homeImageSet[idx]?.projectTitle ?? 'Home') : sectionTitle} ${idx + 1}`}
+                            alt={`${isHomeFlow ? (homeImageSet[idx]?.sourceTitle ?? 'Home') : sectionTitle} ${idx + 1}`}
                             className="image-detail-img"
                             loading="eager"
                             fetchPriority="high"
