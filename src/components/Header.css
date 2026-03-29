@@ -11,7 +11,8 @@
   transition: transform 0.3s ease;
 
   @media (max-width: 768px) {
-    padding: 20px 14px;
+    padding: 0;
+    justify-content: flex-start;
   }
 }
 
@@ -25,14 +26,15 @@
 
   @media (max-width: 768px) {
     position: fixed;
-    top: 16px;
-    left: 14px;
+    top: max(12px, env(safe-area-inset-top));
+    left: max(12px, env(safe-area-inset-left));
     z-index: 240;
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     border: 1px solid rgba(53, 47, 43, 0.1);
-    border-radius: 12px;
+    border-radius: 14px;
     background: rgba(255, 254, 251, 0.96);
+    box-shadow: 0 8px 20px rgba(50, 42, 35, 0.16);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,6 +53,10 @@
 
 .header--hidden {
   transform: translateY(-100%);
+
+  @media (max-width: 768px) {
+    transform: none;
+  }
 }
 
 .header-nav {
@@ -166,7 +172,7 @@
     position: fixed;
     inset: 0;
     border: none;
-    background: rgba(30, 26, 22, 0.25);
+    background: rgba(30, 26, 22, 0.34);
     z-index: 210;
     pointer-events: auto;
   }
@@ -180,14 +186,14 @@
     top: 0;
     left: 0;
     bottom: 0;
-    width: min(320px, calc(100vw - 40px));
+    width: min(356px, calc(100vw - 28px));
     background: var(--bg-paper);
     border-right: 1px solid var(--border);
-    box-shadow: 10px 0 32px rgba(50, 42, 35, 0.2);
+    box-shadow: 10px 0 34px rgba(50, 42, 35, 0.26);
     z-index: 220;
     display: block;
     overflow-y: auto;
-    padding: 78px 18px 20px;
+    padding: 74px 14px 18px;
     pointer-events: auto;
   }
 }
@@ -196,9 +202,11 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding-bottom: 16px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid var(--border);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fffdf9;
 }
 
 .mobile-menu-title {
@@ -216,8 +224,13 @@
   text-align: left;
   background: none;
   border: none;
-  padding: 8px 2px;
+  padding: 10px 8px;
   cursor: pointer;
+  border-radius: 10px;
+
+  &:hover {
+    background: #f9f1e7;
+  }
 }
 
 .mobile-menu-page-link {
@@ -227,8 +240,8 @@
 }
 
 .mobile-menu-icon {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 6px;
   border: 1px solid var(--border);
   display: inline-flex;
@@ -241,9 +254,10 @@
 
 .mobile-menu-accordion {
   width: 100%;
-  border: none;
-  background: none;
-  padding: 8px 2px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px 10px;
   font: inherit;
   color: var(--text-heading);
   display: flex;
@@ -271,5 +285,5 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 0 0 0 28px;
+  padding: 4px 0 0 8px;
 }

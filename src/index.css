@@ -36,12 +36,18 @@
 body {
   margin: 0;
   background: var(--bg);
+  overscroll-behavior: none;
+}
+
+html {
+  overscroll-behavior: none;
 }
 
 #root {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
+  overscroll-behavior: none;
 }
 
 h1, h2, h3 {
