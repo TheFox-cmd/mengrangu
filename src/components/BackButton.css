@@ -31,11 +31,6 @@
   }
 
   @media (max-width: 768px) {
-    top: 20px;
-    left: 14px;
-
-    span {
-      display: none;
-    }
+    display: none;
   }
 }

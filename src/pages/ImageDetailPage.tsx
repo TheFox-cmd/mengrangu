@@ -102,6 +102,29 @@ export default function ImageDetailPage() {
                             </svg>
                         </button>
                     )}
+
+                    <div className="image-nav-mobile-row" aria-hidden="true">
+                        <button
+                            className="image-nav-mobile"
+                            onClick={() => hasPrev && goTo(idx - 1)}
+                            aria-label="Previous image"
+                            disabled={!hasPrev}
+                        >
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="15 18 9 12 15 6" />
+                            </svg>
+                        </button>
+                        <button
+                            className="image-nav-mobile"
+                            onClick={() => hasNext && goTo(idx + 1)}
+                            aria-label="Next image"
+                            disabled={!hasNext}
+                        >
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
                 <div className="image-detail-meta">

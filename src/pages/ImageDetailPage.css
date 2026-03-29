@@ -1,5 +1,6 @@
 .image-detail-page {
-  min-height: 100svh;
+  height: 100svh;
+  overflow: hidden;
   background: var(--bg);
 }
 
@@ -15,7 +16,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100svh;
+  height: 100svh;
+  overflow: hidden;
 }
 
 .image-detail-viewer {
@@ -24,8 +26,8 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 112px 40px 32px;
-  min-height: 80svh;
+  padding: 112px 40px 92px;
+  height: calc(100svh - 72px);
 }
 
 .image-detail-center {
@@ -37,7 +39,7 @@
 
 .image-detail-img {
   max-width: min(100%, calc(100vw - 140px));
-  max-height: calc(100svh - 210px);
+  max-height: calc(100svh - 270px);
   object-fit: contain;
   border-radius: 4px;
 }
@@ -87,7 +89,8 @@
   align-items: center;
   justify-content: center;
   gap: 24px;
-  padding: 16px 40px 40px;
+  height: 72px;
+  padding: 8px 40px 16px;
 }
 
 .image-detail-counter {
@@ -114,25 +117,43 @@
   }
 }
 
-@media (max-width: 900px) {
-  .image-detail-content {
-    justify-content: center;
-  }
+.image-nav-mobile-row {
+  display: none;
+}
 
+.image-nav-mobile {
+  border: none;
+  border-radius: 999px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 254, 251, 0.92);
+  color: var(--text-heading);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+}
+
+@media (max-width: 900px) {
   .image-detail-viewer {
-    min-height: calc(100svh - 120px);
-    padding: 104px 24px 28px;
+    height: calc(100svh - 86px);
+    padding: 92px 20px 74px;
   }
 
   .image-detail-meta {
-    flex-direction: column;
+    height: 86px;
     gap: 10px;
-    padding: 12px 24px 32px;
+    padding: 10px 20px 16px;
+    flex-direction: column;
   }
 
   .image-nav {
-    width: 40px;
-    height: 40px;
+    display: none;
   }
 
   .image-detail-center {
@@ -142,6 +163,16 @@
 
   .image-detail-img {
     max-width: min(100%, calc(100vw - 48px));
-    max-height: calc(100svh - 220px);
+    max-height: calc(100svh - 290px);
+  }
+
+  .image-nav-mobile-row {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
   }
 }
