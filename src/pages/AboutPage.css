@@ -102,8 +102,9 @@
   }
 
   .about-image {
-    flex: 0 0 clamp(150px, 31vh, 36vh);
-    height: clamp(150px, 31vh, 36vh);
+    flex: 1 1 0;
+    min-height: 0;
+    height: auto;
   }
 
   .about-image img {
@@ -111,7 +112,7 @@
   }
 
   .about-text {
-    flex: 1;
+    flex: 1 1 0;
     min-height: 0;
     padding: 14px 18px 14px;
     justify-content: center;
