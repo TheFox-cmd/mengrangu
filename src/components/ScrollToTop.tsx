@@ -1,32 +1,45 @@
 import { useLayoutEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
+function resetScrollStyles() {
+    // Remove all inline overrides so the stylesheet rules in index.css
+    // take effect cleanly (overflow-x: hidden; overflow-y: auto).
+    document.documentElement.style.removeProperty('overflow')
+    document.body.style.removeProperty('overflow')
+    document.body.style.removeProperty('touch-action')
+}
+
+function lockScrollStyles() {
+    document.documentElement.style.overflow = 'hidden'
+    document.body.style.overflow = 'hidden'
+}
+
 export default function ScrollToTop() {
     const { pathname } = useLocation()
 
     useLayoutEffect(() => {
-        const applyRouteScrollLock = () => {
-            const isImageDetailRoute = pathname.startsWith('/image/')
-            const isAboutRoute = pathname === '/about'
-            const shouldLockViewport = isImageDetailRoute || isAboutRoute
-
-            document.documentElement.style.overflow = shouldLockViewport ? 'hidden' : ''
-            document.body.style.overflow = shouldLockViewport ? 'hidden' : ''
-            document.body.style.touchAction = shouldLockViewport ? 'none' : ''
-        }
+        const isLockedRoute =
+            pathname.startsWith('/image/') || pathname === '/about'
 
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-        applyRouteScrollLock()
 
-        // Re-apply lock state when restoring from browser history cache.
-        const handleHistoryRestore = () => {
-            applyRouteScrollLock()
+        if (isLockedRoute) {
+            lockScrollStyles()
+        } else {
+            resetScrollStyles()
         }
 
-        window.addEventListener('pageshow', handleHistoryRestore)
+        const handlePageShow = () => {
+            if (isLockedRoute) lockScrollStyles()
+            else resetScrollStyles()
+        }
 
+        window.addEventListener('pageshow', handlePageShow)
         return () => {
-            window.removeEventListener('pageshow', handleHistoryRestore)
+            window.removeEventListener('pageshow', handlePageShow)
+            // Always clean up inline overrides when leaving a route so
+            // stylesheet rules are never shadowed.
+            resetScrollStyles()
         }
     }, [pathname])
 
