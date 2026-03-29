@@ -40,7 +40,7 @@
 
 .guests-gate-input {
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 16px;
   padding: 12px 16px;
   border: 1px solid var(--border);
   border-radius: 8px;
