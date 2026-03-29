@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background: var(--bg);
   padding: 24px;
   overflow-x: hidden;
@@ -15,6 +15,7 @@
   text-align: center;
   max-width: 400px;
   width: 100%;
+  margin: auto auto;
 }
 
 .guests-gate-title {
@@ -91,6 +92,8 @@
   max-width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .guests-page-header {

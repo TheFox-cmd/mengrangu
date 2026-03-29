@@ -2,6 +2,8 @@
   min-height: 100svh;
   background: #fdfbf8;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .home-gallery-section {
