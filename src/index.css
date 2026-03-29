@@ -34,19 +34,28 @@
 }
 
 body {
+  width: 100%;
+  max-width: 100%;
   margin: 0;
   background: var(--bg);
+  overflow-x: hidden;
   overscroll-behavior: none;
 }
 
 html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   overscroll-behavior: none;
 }
 
 #root {
+  width: 100%;
+  max-width: 100%;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
   overscroll-behavior: none;
 }
 

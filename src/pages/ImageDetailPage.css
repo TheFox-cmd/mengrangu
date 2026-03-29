@@ -1,5 +1,8 @@
 .image-detail-page {
   height: 100svh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   overflow: hidden;
   background: var(--bg);
 }
@@ -17,6 +20,9 @@
   flex-direction: column;
   align-items: center;
   height: 100svh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   overflow: hidden;
 }
 
