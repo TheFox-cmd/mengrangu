@@ -1,6 +1,7 @@
 .project-page {
   min-height: 100vh;
   min-height: 100svh;
+  overflow-y: auto;
 }
 
 .project-detail-header {
@@ -51,8 +52,9 @@
 }
 
 .project-body {
-  max-width: 980px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   padding: 64px 48px;
 
   @media (max-width: 768px) {
@@ -71,8 +73,22 @@
 
 .detail-gallery {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 28px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-gallery-column {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .detail-gallery-item {

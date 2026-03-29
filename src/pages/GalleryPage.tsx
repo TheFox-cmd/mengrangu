@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import BackToTop from '../components/BackToTop'
@@ -6,6 +6,18 @@ import Footer from '../components/Footer'
 import { gallerySections } from '../data/gallery'
 import usePageTitle from '../hooks/usePageTitle'
 import './GalleryPage.css'
+
+function getColumnCount(width: number) {
+    if (width <= 600) return 1
+    if (width <= 1024) return 2
+    return 3
+}
+
+function distributeIntoColumns<T>(items: T[], columnCount: number) {
+    return Array.from({ length: columnCount }, (_, columnIndex) =>
+        items.filter((_, itemIndex) => itemIndex % columnCount === columnIndex),
+    )
+}
 
 function LazyImage({
     src,
@@ -47,10 +59,22 @@ function LazyImage({
 
 export default function GalleryPage() {
     const { slug } = useParams<{ slug: string }>()
+    const [columnCount, setColumnCount] = useState(() => getColumnCount(window.innerWidth))
+
+    const isRealImage = (src: string) => !src.includes('placehold.co')
 
     const sections = slug
         ? gallerySections.filter((s) => s.slug === slug)
         : gallerySections
+
+    useEffect(() => {
+        const handleResize = () => {
+            setColumnCount(getColumnCount(window.innerWidth))
+        }
+
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
 
     usePageTitle(slug ? sections[0]?.title ?? 'Gallery' : 'Gallery')
 
@@ -67,19 +91,37 @@ export default function GalleryPage() {
                     <p>Section not found.</p>
                 </div>
             ) : (
-                sections.map((section) => (
-                    <div className="gallery-section" key={section.slug} id={section.slug}>
-                        {!slug && <h2 className="gallery-section-title">{section.title}</h2>}
-                        <p className="gallery-section-desc">{section.description}</p>
-                        <div className="detail-gallery">
-                            {section.images.slice(0, 1).map((src, i) => (
-                                <Link to={`/image/gallery/${section.slug}/${i}`} className="detail-gallery-item" key={i}>
-                                    <LazyImage src={src} alt={`${section.title} ${i + 1}`} eager={i === 0} />
-                                </Link>
-                            ))}
+                sections.map((section) => {
+                    const images = section.images.filter(isRealImage)
+                    const galleryColumns = distributeIntoColumns(
+                        images.map((src, index) => ({ src, index })),
+                        columnCount,
+                    )
+
+                    return (
+                        <div className="gallery-section" key={section.slug} id={section.slug}>
+                            {!slug && <h2 className="gallery-section-title">{section.title}</h2>}
+                            <p className="gallery-section-desc">{section.description}</p>
+                            {images.length > 0 ? (
+                                <div className="detail-gallery">
+                                    {galleryColumns.map((column, columnIndex) => (
+                                        <div className="detail-gallery-column" key={columnIndex}>
+                                            {column.map(({ src, index }) => (
+                                                <Link to={`/image/gallery/${section.slug}/${index}`} className="detail-gallery-item" key={index}>
+                                                    <LazyImage src={src} alt={`${section.title} ${index + 1}`} eager={index === 0} />
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="gallery-empty">
+                                    <p>No images yet.</p>
+                                </div>
+                            )}
                         </div>
-                    </div>
-                ))
+                    )
+                })
             )}
 
             <Footer />

@@ -11,7 +11,7 @@ import {
 } from 'react-icons/hi2'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { gallerySections } from '../data/gallery'
-import { guestProjects, publicProjects } from '../data/projects'
+import { publicProjects } from '../data/projects'
 import './Header.css'
 
 const navLinks = [
@@ -27,7 +27,6 @@ export default function Header() {
         pathname: location.pathname,
     })
     const [hidden, setHidden] = useState(false)
-    const [guestUnlocked, setGuestUnlocked] = useState(() => sessionStorage.getItem('guests-auth') === 'true')
     const [mobileMenu, setMobileMenu] = useState<{ open: boolean; pathname: string }>({
         open: false,
         pathname: location.pathname,
@@ -35,11 +34,9 @@ export default function Header() {
     const [mobileExpanded, setMobileExpanded] = useState({
         projects: false,
         gallery: false,
-        guests: false,
     })
     const projectsRef = useRef<HTMLDivElement>(null)
     const galleryRef = useRef<HTMLDivElement>(null)
-    const guestsRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const onScroll = () => {
@@ -54,8 +51,7 @@ export default function Header() {
             const target = e.target as Node
             if (
                 projectsRef.current && !projectsRef.current.contains(target) &&
-                galleryRef.current && !galleryRef.current.contains(target) &&
-                guestsRef.current && !guestsRef.current.contains(target)
+                galleryRef.current && !galleryRef.current.contains(target)
             ) {
                 setOpenDropdown({ name: null, pathname: location.pathname })
             }
@@ -63,21 +59,6 @@ export default function Header() {
         document.addEventListener('mousedown', handleClickOutside)
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [location.pathname])
-
-    useEffect(() => {
-        const syncGuestAccess = () => {
-            setGuestUnlocked(sessionStorage.getItem('guests-auth') === 'true')
-        }
-
-        syncGuestAccess()
-        window.addEventListener('storage', syncGuestAccess)
-        window.addEventListener('guest-auth-changed', syncGuestAccess as EventListener)
-
-        return () => {
-            window.removeEventListener('storage', syncGuestAccess)
-            window.removeEventListener('guest-auth-changed', syncGuestAccess as EventListener)
-        }
-    }, [])
 
     const visibleDropdown = openDropdown.pathname === location.pathname ? openDropdown.name : null
     const mobileMenuOpen = mobileMenu.pathname === location.pathname && mobileMenu.open
@@ -99,7 +80,7 @@ export default function Header() {
         setMobileMenu({ open: false, pathname: location.pathname })
     }
 
-    const toggleMobileSection = (section: 'projects' | 'gallery' | 'guests') => {
+    const toggleMobileSection = (section: 'projects' | 'gallery') => {
         setMobileExpanded((prev) => ({
             ...prev,
             [section]: !prev[section],
@@ -188,43 +169,12 @@ export default function Header() {
                     )}
                 </div>
 
-                <div className="header-dropdown-wrap" ref={guestsRef}>
-                    {guestUnlocked ? (
-                        <>
-                            <button
-                                className="nav-link dropdown-toggle"
-                                onClick={() => toggle('guests')}
-                                aria-expanded={visibleDropdown === 'guests'}
-                            >
-                                Guests
-                                <HiChevronDown className={`toggle-arrow${visibleDropdown === 'guests' ? ' open' : ''}`} />
-                            </button>
-                            {visibleDropdown === 'guests' && (
-                                <ul className="header-dropdown">
-                                    {guestProjects.map((project) => (
-                                        <li key={project.id}>
-                                            <button
-                                                className="dropdown-item"
-                                                onClick={() => {
-                                                    onNavigate(`/projects/${project.slug}`)
-                                                }}
-                                            >
-                                                {project.title}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </>
-                    ) : (
-                        <Link
-                            to="/guests"
-                            className={`nav-link${location.pathname === '/guests' ? ' active' : ''}`}
-                        >
-                            Guests
-                        </Link>
-                    )}
-                </div>
+                <Link
+                    to="/guests"
+                    className={`nav-link${location.pathname === '/guests' ? ' active' : ''}`}
+                >
+                    Guests
+                </Link>
 
                 {navLinks.slice(1).map((item) => (
                     <Link
@@ -256,12 +206,10 @@ export default function Header() {
                                 <HiInformationCircle className="mobile-menu-icon" aria-hidden="true" />
                                 <span>About</span>
                             </button>
-                            {!guestUnlocked && (
-                                <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate('/guests')}>
-                                    <HiUsers className="mobile-menu-icon" aria-hidden="true" />
-                                    <span>Guests</span>
-                                </button>
-                            )}
+                            <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate('/guests')}>
+                                <HiUsers className="mobile-menu-icon" aria-hidden="true" />
+                                <span>Guests</span>
+                            </button>
                         </div>
 
                         <div className="mobile-menu-section">
@@ -310,30 +258,6 @@ export default function Header() {
                             )}
                         </div>
 
-                        {guestUnlocked && (
-                            <div className="mobile-menu-section">
-                                <button className="mobile-menu-accordion" onClick={() => toggleMobileSection('guests')}>
-                                    <span className="mobile-menu-accordion-label">
-                                        <HiUsers className="mobile-menu-icon" aria-hidden="true" />
-                                        <span>Guests</span>
-                                    </span>
-                                    <HiChevronDown className={`mobile-menu-chevron${mobileExpanded.guests ? ' open' : ''}`} aria-hidden="true" />
-                                </button>
-                                {mobileExpanded.guests && (
-                                    <div className="mobile-menu-sublist">
-                                        {guestProjects.map((project) => (
-                                            <button
-                                                key={project.id}
-                                                className="mobile-menu-link"
-                                                onClick={() => onNavigate(`/projects/${project.slug}`)}
-                                            >
-                                                {project.title}
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        )}
                     </aside>
                 </>
             )}

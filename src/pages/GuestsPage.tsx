@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { HiChevronDown } from 'react-icons/hi2'
 import { Link } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import Footer from '../components/Footer'
@@ -17,8 +18,22 @@ export default function GuestsPage() {
     const [selectedSlug, setSelectedSlug] = useState(guestProjects[0]?.slug ?? '')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
+    const [pickerOpen, setPickerOpen] = useState(false)
+    const pickerRef = useRef<HTMLDivElement>(null)
 
     const selectedProject = guestProjects.find((project) => project.slug === selectedSlug) ?? guestProjects[0]
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as Node
+            if (pickerRef.current && !pickerRef.current.contains(target)) {
+                setPickerOpen(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [])
 
     const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -74,39 +89,55 @@ export default function GuestsPage() {
             <div className="guests-content">
                 {selectedProject ? (
                     <>
-                        <label className="guests-project-picker">
-                            <span>Project</span>
-                            <select value={selectedProject.slug} onChange={(e) => setSelectedSlug(e.target.value)}>
-                                {guestProjects.map((project) => (
-                                    <option key={project.id} value={project.slug}>
-                                        {project.title}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
+                        <div className="guests-project-picker">
+                            <div className="guests-project-dropdown" ref={pickerRef}>
+                                <button
+                                    type="button"
+                                    className="nav-link dropdown-toggle guests-project-trigger"
+                                    onClick={() => setPickerOpen((open) => !open)}
+                                    aria-haspopup="listbox"
+                                    aria-expanded={pickerOpen}
+                                >
+                                    <span>{selectedProject.title}</span>
+                                    <HiChevronDown className={`toggle-arrow${pickerOpen ? ' open' : ''}`} />
+                                </button>
+                                {pickerOpen && (
+                                    <ul className="header-dropdown guests-project-menu" role="listbox" aria-label="Guest projects">
+                                        {guestProjects.map((project) => (
+                                            <li key={project.id}>
+                                                <button
+                                                    type="button"
+                                                    className="dropdown-item guests-project-option"
+                                                    onClick={() => {
+                                                        setSelectedSlug(project.slug)
+                                                        setPickerOpen(false)
+                                                    }}
+                                                >
+                                                    {project.title}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
+                        </div>
 
                         <div className="guests-project-detail">
-                            <h2>{selectedProject.title}</h2>
-                            <p className="guests-project-brief">{selectedProject.brief}</p>
-                            <p className="guests-project-description">{selectedProject.description}</p>
-
-                            <div className="detail-gallery">
-                                {selectedProject.images.slice(0, 1).map((src, index) => (
-                                    <Link
-                                        key={`${selectedProject.slug}-${index}`}
-                                        to={`/image/projects/${selectedProject.slug}/${index}`}
-                                        className="detail-gallery-item"
-                                    >
-                                        <img
-                                            src={src}
-                                            alt={`${selectedProject.title} ${index + 1}`}
-                                            loading={index === 0 ? 'eager' : 'lazy'}
-                                            fetchPriority={index === 0 ? 'high' : 'low'}
-                                            decoding="async"
-                                        />
-                                    </Link>
-                                ))}
-                            </div>
+                            <Link
+                                to={`/projects/${selectedProject.slug}`}
+                                className="guests-featured-card"
+                            >
+                                <img
+                                    src={selectedProject.images[0]}
+                                    alt={selectedProject.title}
+                                    loading="eager"
+                                    fetchPriority="high"
+                                    decoding="async"
+                                />
+                                <div className="guests-featured-meta">
+                                    <span>{selectedProject.title}</span>
+                                </div>
+                            </Link>
                         </div>
                     </>
                 ) : null}

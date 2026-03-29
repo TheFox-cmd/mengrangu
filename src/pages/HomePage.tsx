@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import BackToTop from '../components/BackToTop'
 import Footer from '../components/Footer'
-import { gallerySections } from '../data/gallery'
 import { guestProjects, publicProjects } from '../data/projects'
 import usePageTitle from '../hooks/usePageTitle'
 import './HomePage.css'
@@ -29,25 +28,14 @@ export default function HomePage() {
 
     const visibleProjects = guestUnlocked ? [...publicProjects, ...guestProjects] : publicProjects
 
-    const projectImages = visibleProjects.flatMap((project) =>
-        project.images.map((src, index) => ({
-            src,
-            index,
+    const homeImages = visibleProjects
+        .map((project) => ({
+            src: project.images[0],
+            to: `/projects/${project.slug}`,
             sourceKey: `project-${project.slug}`,
             sourceTitle: project.title,
-        })),
-    )
-
-    const galleryImages = gallerySections.flatMap((section) =>
-        section.images.map((src, index) => ({
-            src,
-            index,
-            sourceKey: `gallery-${section.slug}`,
-            sourceTitle: section.title,
-        })),
-    )
-
-    const homeImages = [...projectImages, ...galleryImages]
+        }))
+        .filter((image): image is { src: string; to: string; sourceKey: string; sourceTitle: string } => !!image.src)
 
     return (
         <div className="home-page">
@@ -56,13 +44,13 @@ export default function HomePage() {
                 <div className="home-masonry-gallery">
                     {homeImages.map((image, listIndex) => (
                         <Link
-                            to={`/image/home/${listIndex}`}
+                            to={image.to}
                             className="home-masonry-item"
-                            key={`${image.sourceKey}-${image.index}`}
+                            key={image.sourceKey}
                         >
                             <img
                                 src={image.src}
-                                alt={`${image.sourceTitle} ${image.index + 1}`}
+                                alt={image.sourceTitle}
                                 loading={listIndex < 3 ? 'eager' : 'lazy'}
                                 fetchPriority={listIndex < 3 ? 'high' : 'low'}
                                 decoding="async"

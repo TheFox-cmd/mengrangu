@@ -12,28 +12,17 @@ export default function ImageDetailPage() {
     const idx = Number(index)
     const isHomeFlow = type === undefined && slug === undefined
     const guestUnlocked = sessionStorage.getItem('guests-auth') === 'true'
+    const isRealImage = (src: string) => !src.includes('placehold.co')
 
     const homeImageSet = useMemo(() => {
         const visibleProjects = guestUnlocked ? [...publicProjects, ...guestProjects] : publicProjects
-        const projectEntries = visibleProjects.flatMap((project) =>
-            project.images.map((src, imageIndex) => ({
-                src,
-                imageIndex,
+        return visibleProjects
+            .map((project) => ({
+                src: project.images[0],
                 sourceTitle: project.title,
                 sourceColor: project.color,
-            })),
-        )
-
-        const galleryEntries = gallerySections.flatMap((section) =>
-            section.images.map((src, imageIndex) => ({
-                src,
-                imageIndex,
-                sourceTitle: section.title,
-                sourceColor: section.color,
-            })),
-        )
-
-        return [...projectEntries, ...galleryEntries]
+            }))
+            .filter((entry): entry is { src: string; sourceTitle: string; sourceColor: string } => !!entry.src)
     }, [guestUnlocked])
 
     let images: string[] = []
@@ -62,7 +51,7 @@ export default function ImageDetailPage() {
     } else if (type === 'gallery') {
         const section = gallerySections.find((s) => s.slug === slug)
         if (section) {
-            images = section.images
+            images = section.images.filter(isRealImage)
             sectionTitle = section.title
             basePath = `/gallery/${slug}`
             sectionColor = section.color

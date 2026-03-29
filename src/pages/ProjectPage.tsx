@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import BackToTop from '../components/BackToTop'
@@ -6,6 +6,18 @@ import Footer from '../components/Footer'
 import { projects } from '../data/projects'
 import usePageTitle from '../hooks/usePageTitle'
 import './ProjectPage.css'
+
+function getColumnCount(width: number) {
+    if (width <= 600) return 1
+    if (width <= 1024) return 2
+    return 3
+}
+
+function distributeIntoColumns<T>(items: T[], columnCount: number) {
+    return Array.from({ length: columnCount }, (_, columnIndex) =>
+        items.filter((_, itemIndex) => itemIndex % columnCount === columnIndex),
+    )
+}
 
 function LazyImage({
     src,
@@ -48,7 +60,17 @@ function LazyImage({
 export default function ProjectPage() {
     const { slug } = useParams<{ slug: string }>()
     const project = projects.find((p) => p.slug === slug)
+    const [columnCount, setColumnCount] = useState(() => getColumnCount(window.innerWidth))
     usePageTitle(project?.title ?? 'Project')
+
+    useEffect(() => {
+        const handleResize = () => {
+            setColumnCount(getColumnCount(window.innerWidth))
+        }
+
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
 
     if (!project) {
         return (
@@ -64,6 +86,11 @@ export default function ProjectPage() {
         return <Navigate to="/guests" replace />
     }
 
+    const galleryColumns = distributeIntoColumns(
+        project.images.map((src, index) => ({ src, index })),
+        columnCount,
+    )
+
     return (
         <div className="project-page">
             <BackButton />
@@ -77,14 +104,18 @@ export default function ProjectPage() {
 
                 {project.images.length > 0 ? (
                     <div className="detail-gallery">
-                        {project.images.slice(0, 1).map((src, i) => (
-                            <Link to={`/image/projects/${project.slug}/${i}`} className="detail-gallery-item" key={i}>
-                                <LazyImage
-                                    src={src}
-                                    alt={`${project.title} work ${i + 1}`}
-                                    eager={i === 0}
-                                />
-                            </Link>
+                        {galleryColumns.map((column, columnIndex) => (
+                            <div className="detail-gallery-column" key={columnIndex}>
+                                {column.map(({ src, index }) => (
+                                    <Link to={`/image/projects/${project.slug}/${index}`} className="detail-gallery-item" key={index}>
+                                        <LazyImage
+                                            src={src}
+                                            alt={`${project.title} work ${index + 1}`}
+                                            eager={index === 0}
+                                        />
+                                    </Link>
+                                ))}
+                            </div>
                         ))}
                     </div>
                 ) : (
