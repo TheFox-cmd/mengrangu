@@ -37,11 +37,22 @@
   height: calc(100svh - 72px);
 }
 
+:root[data-theme='dark'] .image-detail-viewer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .image-detail-center {
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .image-detail-img {
@@ -77,6 +88,7 @@
   cursor: pointer;
   color: var(--text-heading);
   transition: background 0.2s ease, color 0.2s ease;
+  z-index: 1;
 
   &:hover {
     background: rgba(0, 0, 0, 0.15);
@@ -136,7 +148,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 254, 251, 0.92);
+  background: var(--surface-glass);
   color: var(--text-heading);
   cursor: pointer;
 
