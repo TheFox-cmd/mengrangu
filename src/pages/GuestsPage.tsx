@@ -11,8 +11,8 @@ const SESSION_KEY = 'guests-auth'
 const KEY = import.meta.env.VITE_KEY ?? ''
 
 async function generateDailyPassword(key: string): Promise<string> {
-    const today = new Date()
-    const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+    const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(new Date())
+    const dateStr = parts
     const encoder = new TextEncoder()
     const cryptoKey = await crypto.subtle.importKey(
         'raw',
