@@ -1,3 +1,4 @@
+import { sha256 } from 'js-sha256'
 import { useEffect, useRef, useState } from 'react'
 import { HiChevronDown, HiEye, HiEyeSlash } from 'react-icons/hi2'
 import { Link } from 'react-router-dom'
@@ -10,19 +11,26 @@ import './GuestsPage.css'
 const SESSION_KEY = 'guests-auth'
 const KEY = import.meta.env.VITE_KEY ?? ''
 
-async function generateDailyPassword(key: string): Promise<string> {
-    const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(new Date())
-    const dateStr = parts
+function hmacSha256Array(key: string, message: string): number[] {
+    const BLOCK_SIZE = 64
     const encoder = new TextEncoder()
-    const cryptoKey = await crypto.subtle.importKey(
-        'raw',
-        encoder.encode(key),
-        { name: 'HMAC', hash: 'SHA-256' },
-        false,
-        ['sign'],
-    )
-    const signature = await crypto.subtle.sign('HMAC', cryptoKey, encoder.encode(dateStr))
-    const hashArray = Array.from(new Uint8Array(signature))
+    let keyBytes = Array.from(encoder.encode(key))
+    if (keyBytes.length > BLOCK_SIZE) {
+        keyBytes = sha256.array(new Uint8Array(keyBytes))
+    }
+    while (keyBytes.length < BLOCK_SIZE) {
+        keyBytes.push(0)
+    }
+    const ipad = keyBytes.map((b) => b ^ 0x36)
+    const opad = keyBytes.map((b) => b ^ 0x5c)
+    const msgBytes = Array.from(encoder.encode(message))
+    const innerHash = sha256.array(new Uint8Array([...ipad, ...msgBytes]))
+    return sha256.array(new Uint8Array([...opad, ...innerHash]))
+}
+
+function generateDailyPassword(key: string): string {
+    const dateStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(new Date())
+    const hashArray = hmacSha256Array(key, dateStr)
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
     return hashArray.slice(0, 8).map((b) => chars[b % chars.length]).join('')
 }
@@ -38,17 +46,9 @@ export default function GuestsPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [pickerOpen, setPickerOpen] = useState(false)
     const pickerRef = useRef<HTMLDivElement>(null)
-    const [currentPassword, setCurrentPassword] = useState<string | null>(null)
+    const currentPassword = useRef(generateDailyPassword(KEY))
 
     const selectedProject = guestProjects.find((project) => project.slug === selectedSlug) ?? guestProjects[0]
-
-    useEffect(() => {
-        let cancelled = false
-        generateDailyPassword(KEY).then((pw) => {
-            if (!cancelled) setCurrentPassword(pw)
-        })
-        return () => { cancelled = true }
-    }, [])
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -64,7 +64,7 @@ export default function GuestsPage() {
 
     const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (currentPassword && password === currentPassword) {
+        if (currentPassword.current && password === currentPassword.current) {
             sessionStorage.setItem(SESSION_KEY, 'true')
             window.dispatchEvent(new Event('guest-auth-changed'))
             setAuthenticated(true)
