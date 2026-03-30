@@ -8,26 +8,23 @@ import usePageTitle from '../hooks/usePageTitle'
 import './GuestsPage.css'
 
 const SESSION_KEY = 'guests-auth'
-const ROTATION_URL = 'https://andocas.com/gtfo/r8a2/'
+const KEY = import.meta.env.VITE_KEY ?? ''
 
-function parseRotationSchedule(html: string): { password: string; start: Date; end: Date }[] {
-    const entries: { password: string; start: Date; end: Date }[] = []
-    const pattern = /([A-Z0-9]{5}-[A-Z0-9]{5})\s+(\d{1,2}\/\d{1,2}\/\d{4},\s*\d{1,2}:\d{2}:\d{2}\s*[AP]M)\s*→\s*(\d{1,2}\/\d{1,2}\/\d{4},\s*\d{1,2}:\d{2}:\d{2}\s*[AP]M)/g
-    let match
-    while ((match = pattern.exec(html)) !== null) {
-        const start = new Date(match[2])
-        const end = new Date(match[3])
-        if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
-            entries.push({ password: match[1], start, end })
-        }
-    }
-    return entries
-}
-
-function findCurrentPassword(entries: { password: string; start: Date; end: Date }[]): string | null {
-    const now = new Date()
-    const active = entries.find((e) => now >= e.start && now <= e.end)
-    return active?.password ?? null
+async function generateDailyPassword(key: string): Promise<string> {
+    const today = new Date()
+    const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+    const encoder = new TextEncoder()
+    const cryptoKey = await crypto.subtle.importKey(
+        'raw',
+        encoder.encode(key),
+        { name: 'HMAC', hash: 'SHA-256' },
+        false,
+        ['sign'],
+    )
+    const signature = await crypto.subtle.sign('HMAC', cryptoKey, encoder.encode(dateStr))
+    const hashArray = Array.from(new Uint8Array(signature))
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+    return hashArray.slice(0, 8).map((b) => chars[b % chars.length]).join('')
 }
 
 export default function GuestsPage() {
@@ -46,14 +43,9 @@ export default function GuestsPage() {
 
     useEffect(() => {
         let cancelled = false
-        fetch(ROTATION_URL)
-            .then((res) => res.text())
-            .then((html) => {
-                if (cancelled) return
-                const entries = parseRotationSchedule(html)
-                setCurrentPassword(findCurrentPassword(entries))
-            })
-            .catch(() => { })
+        generateDailyPassword(KEY).then((pw) => {
+            if (!cancelled) setCurrentPassword(pw)
+        })
         return () => { cancelled = true }
     }, [])
 
