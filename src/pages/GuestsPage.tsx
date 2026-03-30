@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { HiChevronDown } from 'react-icons/hi2'
+import { HiChevronDown, HiEye, HiEyeSlash } from 'react-icons/hi2'
 import { Link } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import Footer from '../components/Footer'
@@ -35,6 +35,7 @@ export default function GuestsPage() {
     const [selectedSlug, setSelectedSlug] = useState(guestProjects[0]?.slug ?? '')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
     const [pickerOpen, setPickerOpen] = useState(false)
     const pickerRef = useRef<HTMLDivElement>(null)
     const [currentPassword, setCurrentPassword] = useState<string | null>(null)
@@ -83,17 +84,27 @@ export default function GuestsPage() {
                         This page is password-protected. Please enter the password to continue.
                     </p>
                     <form onSubmit={handleSubmit} className="guests-gate-form">
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value)
-                                setError(false)
-                            }}
-                            placeholder="Enter password"
-                            className={`guests-gate-input${error ? ' error' : ''}`}
-                            autoFocus
-                        />
+                        <div className="guests-gate-input-wrap">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                value={password}
+                                onChange={(e) => {
+                                    setPassword(e.target.value)
+                                    setError(false)
+                                }}
+                                placeholder="Enter password"
+                                className={`guests-gate-input${error ? ' error' : ''}`}
+                                autoFocus
+                            />
+                            <button
+                                type="button"
+                                className="guests-gate-eye"
+                                onClick={() => setShowPassword((v) => !v)}
+                                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                            >
+                                {showPassword ? <HiEyeSlash /> : <HiEye />}
+                            </button>
+                        </div>
                         <button type="submit" className="guests-gate-btn">
                             Enter
                         </button>
