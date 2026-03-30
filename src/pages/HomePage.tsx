@@ -4,6 +4,7 @@ import BackButton from '../components/BackButton'
 import BackToTop from '../components/BackToTop'
 import Footer from '../components/Footer'
 import { guestProjects, publicProjects } from '../data/projects'
+import useMasonryColumns from '../hooks/useMasonryColumns'
 import usePageTitle from '../hooks/usePageTitle'
 import './HomePage.css'
 
@@ -37,27 +38,30 @@ export default function HomePage() {
         }))
         .filter((image): image is { src: string; to: string; sourceKey: string; sourceTitle: string } => !!image.src)
 
+    const columns = useMasonryColumns(homeImages)
+
     return (
         <div className="home-page">
             <BackButton />
             <section className="home-gallery-section">
                 <div className="home-masonry-gallery">
-                    {homeImages.map((image, listIndex) => (
-                        <Link
-                            to={image.to}
-                            className="home-masonry-item"
-                            key={image.sourceKey}
-                        >
-                            <img
-                                src={image.src}
-                                alt={image.sourceTitle}
-                                loading={listIndex < 3 ? 'eager' : 'lazy'}
-                                fetchPriority={listIndex < 3 ? 'high' : 'low'}
-                                decoding="async"
-                            />
-                            <div className="home-masonry-meta">
-                            </div>
-                        </Link>
+                    {columns.map((column, columnIndex) => (
+                        <div className="home-masonry-column" key={columnIndex}>
+                            {column.map((image) => (
+                                <Link
+                                    to={image.to}
+                                    className="home-masonry-item"
+                                    key={image.sourceKey}
+                                >
+                                    <img
+                                        src={image.src}
+                                        alt={image.sourceTitle}
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                </Link>
+                            ))}
+                        </div>
                     ))}
                 </div>
             </section>

@@ -7,8 +7,9 @@
 }
 
 .home-gallery-section {
-  max-width: 1360px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   padding: 112px 48px 80px;
 
   @media (max-width: 768px) {
@@ -21,12 +22,18 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
 
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.home-masonry-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (max-width: 600px) {
     gap: 16px;
   }
 }

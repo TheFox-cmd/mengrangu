@@ -1,23 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import BackToTop from '../components/BackToTop'
 import Footer from '../components/Footer'
 import { projects } from '../data/projects'
+import useMasonryColumns from '../hooks/useMasonryColumns'
 import usePageTitle from '../hooks/usePageTitle'
 import './ProjectPage.css'
-
-function getColumnCount(width: number) {
-    if (width <= 600) return 1
-    if (width <= 1024) return 2
-    return 3
-}
-
-function distributeIntoColumns<T>(items: T[], columnCount: number) {
-    return Array.from({ length: columnCount }, (_, columnIndex) =>
-        items.filter((_, itemIndex) => itemIndex % columnCount === columnIndex),
-    )
-}
 
 function LazyImage({
     src,
@@ -60,17 +49,11 @@ function LazyImage({
 export default function ProjectPage() {
     const { slug } = useParams<{ slug: string }>()
     const project = projects.find((p) => p.slug === slug)
-    const [columnCount, setColumnCount] = useState(() => getColumnCount(window.innerWidth))
     usePageTitle(project?.title ?? 'Project')
 
-    useEffect(() => {
-        const handleResize = () => {
-            setColumnCount(getColumnCount(window.innerWidth))
-        }
-
-        window.addEventListener('resize', handleResize)
-        return () => window.removeEventListener('resize', handleResize)
-    }, [])
+    const galleryColumns = useMasonryColumns(
+        (project?.images ?? []).map((src, index) => ({ src, index })),
+    )
 
     if (!project) {
         return (
@@ -85,11 +68,6 @@ export default function ProjectPage() {
     if (project.guestOnly && sessionStorage.getItem('guests-auth') !== 'true') {
         return <Navigate to="/guests" replace />
     }
-
-    const galleryColumns = distributeIntoColumns(
-        project.images.map((src, index) => ({ src, index })),
-        columnCount,
-    )
 
     return (
         <div className="project-page">
