@@ -7,12 +7,14 @@
 }
 
 .home-gallery-section {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 112px 48px 80px;
+  width: 80%;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 112px 0 80px;
 
   @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
     padding: 104px 20px 56px;
   }
 }
@@ -44,7 +46,6 @@
   border-radius: 14px;
   overflow: hidden;
   background: var(--bg-paper);
-  border: 2px solid var(--card-border-strong);
   box-shadow: 0 16px 32px -12px rgba(92, 70, 46, 0.3), 0 8px 16px -10px rgba(92, 70, 46, 0.22);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 

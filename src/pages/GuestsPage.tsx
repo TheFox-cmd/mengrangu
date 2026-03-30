@@ -8,7 +8,27 @@ import usePageTitle from '../hooks/usePageTitle'
 import './GuestsPage.css'
 
 const SESSION_KEY = 'guests-auth'
-const GUEST_PASSWORD = 'tastybunny2026'
+const ROTATION_URL = 'https://andocas.com/gtfo/r8a2/'
+
+function parseRotationSchedule(html: string): { password: string; start: Date; end: Date }[] {
+    const entries: { password: string; start: Date; end: Date }[] = []
+    const pattern = /([A-Z0-9]{5}-[A-Z0-9]{5})\s+(\d{1,2}\/\d{1,2}\/\d{4},\s*\d{1,2}:\d{2}:\d{2}\s*[AP]M)\s*→\s*(\d{1,2}\/\d{1,2}\/\d{4},\s*\d{1,2}:\d{2}:\d{2}\s*[AP]M)/g
+    let match
+    while ((match = pattern.exec(html)) !== null) {
+        const start = new Date(match[2])
+        const end = new Date(match[3])
+        if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
+            entries.push({ password: match[1], start, end })
+        }
+    }
+    return entries
+}
+
+function findCurrentPassword(entries: { password: string; start: Date; end: Date }[]): string | null {
+    const now = new Date()
+    const active = entries.find((e) => now >= e.start && now <= e.end)
+    return active?.password ?? null
+}
 
 export default function GuestsPage() {
     usePageTitle('Guests')
@@ -20,8 +40,22 @@ export default function GuestsPage() {
     const [error, setError] = useState(false)
     const [pickerOpen, setPickerOpen] = useState(false)
     const pickerRef = useRef<HTMLDivElement>(null)
+    const [currentPassword, setCurrentPassword] = useState<string | null>(null)
 
     const selectedProject = guestProjects.find((project) => project.slug === selectedSlug) ?? guestProjects[0]
+
+    useEffect(() => {
+        let cancelled = false
+        fetch(ROTATION_URL)
+            .then((res) => res.text())
+            .then((html) => {
+                if (cancelled) return
+                const entries = parseRotationSchedule(html)
+                setCurrentPassword(findCurrentPassword(entries))
+            })
+            .catch(() => { })
+        return () => { cancelled = true }
+    }, [])
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -37,7 +71,7 @@ export default function GuestsPage() {
 
     const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (password === GUEST_PASSWORD) {
+        if (currentPassword && password === currentPassword) {
             sessionStorage.setItem(SESSION_KEY, 'true')
             window.dispatchEvent(new Event('guest-auth-changed'))
             setAuthenticated(true)
