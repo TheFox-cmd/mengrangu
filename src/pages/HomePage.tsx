@@ -56,7 +56,6 @@ export default function HomePage() {
                                 decoding="async"
                             />
                             <div className="home-masonry-meta">
-                                <span>{image.sourceTitle}</span>
                             </div>
                         </Link>
                     ))}
