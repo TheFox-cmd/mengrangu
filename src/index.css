@@ -24,8 +24,8 @@
   --card-meta-border: #eed9bb;
   --overlay-backdrop: rgba(30, 26, 22, 0.34);
 
-  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
 
   font: 16px/1.6 var(--font-body);
   font-weight: 300;

@@ -44,6 +44,7 @@ export default function HomePage() {
         <div className="home-page">
             <BackButton />
             <section className="home-gallery-section">
+                <p className="home-artist-tag">Art of Mengrangu</p>
                 <div className="home-masonry-gallery">
                     {columns.map((column, columnIndex) => (
                         <div className="home-masonry-column" key={columnIndex}>

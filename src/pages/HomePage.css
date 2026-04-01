@@ -19,6 +19,17 @@
   }
 }
 
+.home-artist-tag {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  opacity: 0.45;
+  text-align: center;
+  margin: 0 0 28px;
+}
+
 .home-masonry-gallery {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
