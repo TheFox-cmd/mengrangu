@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import BackToTop from '../components/BackToTop'
@@ -10,6 +10,9 @@ import './HomePage.css'
 
 export default function HomePage() {
     usePageTitle('Home')
+
+    const animKey = useRef(0)
+    animKey.current++
 
     const [guestUnlocked, setGuestUnlocked] = useState(() => sessionStorage.getItem('guests-auth') === 'true')
 

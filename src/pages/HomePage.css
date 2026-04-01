@@ -32,6 +32,10 @@
   width: 60%;
   margin: 0 auto;
   text-align: center;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 }
 
 .home-artist-text {
@@ -50,15 +54,19 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background-color: #b8d8e8;
+  background-color: var(--title-border);
   transform-origin: center center;
   transform: scaleX(0);
   animation: line-reveal 3s ease forwards;
+
+  @media (max-width: 768px) {
+    height: 2px;
+  }
 }
 
 .home-artist-text .home-artist-lg {
   font-family: var(--font-heading);
-  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-size: clamp(2.2rem, 8vw, 7rem);
   font-weight: 600;
   font-style: italic;
   letter-spacing: 2px;
@@ -66,11 +74,16 @@
   color: var(--title-color);
   -webkit-text-stroke: 1.5px var(--title-border);
   paint-order: stroke fill;
+
+  @media (max-width: 768px) {
+    letter-spacing: 1px;
+    -webkit-text-stroke: 1px var(--title-border);
+  }
 }
 
 .home-artist-text .home-artist-sm {
   font-family: var(--font-body);
-  font-size: clamp(1rem, 2vw, 1.6rem);
+  font-size: clamp(0.8rem, 2vw, 1.6rem);
   font-weight: 300;
   font-style: italic;
   letter-spacing: 1px;
