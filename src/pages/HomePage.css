@@ -21,13 +21,27 @@
 
 .home-artist-tag {
   font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
-  opacity: 0.45;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   text-align: center;
-  margin: 0 0 28px;
+  margin: 0 0 32px;
+  color: transparent;
+  background: linear-gradient(
+    180deg,
+    var(--tag-shadow) 0%,
+    var(--tag-face) 45%,
+    var(--tag-highlight) 55%,
+    var(--tag-face) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-shadow:
+    0 1px 1px var(--tag-highlight),
+    0 -1px 1px var(--tag-shadow);
+  opacity: 0.35;
+  user-select: none;
 }
 
 .home-masonry-gallery {

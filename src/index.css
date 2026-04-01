@@ -24,6 +24,10 @@
   --card-meta-border: #eed9bb;
   --overlay-backdrop: rgba(30, 26, 22, 0.34);
 
+  --tag-face: #9E9080;
+  --tag-shadow: rgba(0, 0, 0, 0.18);
+  --tag-highlight: rgba(255, 255, 255, 0.5);
+
   --font-heading: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
 
@@ -63,6 +67,10 @@
   --card-meta-bg: rgba(29, 27, 24, 0.96);
   --card-meta-border: #3a342e;
   --overlay-backdrop: rgba(5, 5, 5, 0.56);
+
+  --tag-face: #7a7068;
+  --tag-shadow: rgba(0, 0, 0, 0.45);
+  --tag-highlight: rgba(255, 255, 255, 0.12);
 }
 
 *,
