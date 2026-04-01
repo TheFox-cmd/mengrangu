@@ -12,6 +12,7 @@ import {
     HiXMark,
 } from 'react-icons/hi2'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import logoImg from '../assets/logo.png'
 import { gallerySections } from '../data/gallery'
 import { guestProjects, publicProjects } from '../data/projects'
 import './Header.css'
@@ -111,6 +112,7 @@ export default function Header() {
             {location.pathname !== '/about' && (
                 <div className="header-title">
                     <div className="header-title-text">
+                        <img src={logoImg} alt="" className="header-title-logo" />
                         <span className="header-title-lg">Art</span>
                         <span className="header-title-sm">of</span>
                         <span className="header-title-lg">Mengran</span>

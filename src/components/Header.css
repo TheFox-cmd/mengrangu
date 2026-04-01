@@ -11,9 +11,15 @@
 
 .header-title-text {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
   gap: 0.35em;
+}
+
+.header-title-logo {
+  height: clamp(1.4rem, 4vw, 3rem);
+  width: auto;
+  object-fit: contain;
 }
 
 .header-title-lg {
