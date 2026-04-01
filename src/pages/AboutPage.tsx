@@ -10,12 +10,12 @@ export default function AboutPage() {
         <div className="about-container">
             <BackButton />
             <div className="about-image">
-                <img src="/about.png" alt="Mengrangu" />
+                <img src="/about.png" alt="Mengran" />
             </div>
             <div className="about-text">
-                <h1 className="about-title">About Mengrangu</h1>
+                <h1 className="about-title">About Mengran</h1>
                 <p className="about-bio">
-                    Mengrangu is a conceptual artist with 4 years of
+                    Mengran is a conceptual artist with 4 years of
                     experience in the gaming industry, focused on character design and
                     environmental illustration. I'm drawn to the small things that make
                     a world feel alive: the shape of a silhouette, the mood of a quiet

@@ -127,7 +127,7 @@
 }
 
 .guests-page-header {
-  padding: 120px 48px 40px;
+  padding: 40px 48px 40px;
   text-align: center;
 
   h1 {
@@ -135,7 +135,7 @@
   }
 
   @media (max-width: 768px) {
-    padding: 100px 24px 32px;
+    padding: 24px 24px 32px;
   }
 }
 

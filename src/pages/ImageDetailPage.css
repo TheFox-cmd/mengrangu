@@ -33,7 +33,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 112px 40px 92px;
+  padding: 20px 40px 92px;
   height: calc(100svh - 72px);
 }
 
@@ -161,7 +161,7 @@
 @media (max-width: 900px) {
   .image-detail-viewer {
     height: calc(100svh - 86px);
-    padding: 92px 20px 74px;
+    padding: 20px 20px 74px;
   }
 
   .image-detail-meta {

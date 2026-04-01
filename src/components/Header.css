@@ -1,13 +1,7 @@
 .header-title {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 101;
   display: flex;
   justify-content: center;
   padding: 18px 28px 0;
-  pointer-events: none;
   user-select: none;
 
   @media (max-width: 768px) {
@@ -62,10 +56,8 @@
   pointer-events: none;
 
   @media (max-width: 768px) {
-    padding: 0;
-    top: 0;
-    bottom: auto;
-    right: 0;
+    position: static;
+    padding: 12px 20px 16px;
     align-items: flex-start;
     justify-content: flex-start;
   }
@@ -137,9 +129,7 @@
 }
 
 .header--hidden {
-  @media (max-width: 768px) {
-    transform: none;
-  }
+  display: none;
 }
 
 .header-nav {
