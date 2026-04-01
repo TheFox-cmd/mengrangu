@@ -28,7 +28,6 @@ export default function Header() {
         name: null,
         pathname: location.pathname,
     })
-    const [hidden, setHidden] = useState(false)
     const [mobileMenu, setMobileMenu] = useState<{ open: boolean; pathname: string }>({
         open: false,
         pathname: location.pathname,
@@ -49,14 +48,6 @@ export default function Header() {
         document.documentElement.dataset.theme = theme
         localStorage.setItem('theme', theme)
     }, [theme])
-
-    useEffect(() => {
-        const onScroll = () => {
-            setHidden(window.scrollY > 80)
-        }
-        window.addEventListener('scroll', onScroll, { passive: true })
-        return () => window.removeEventListener('scroll', onScroll)
-    }, [])
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -125,7 +116,7 @@ export default function Header() {
                 </div>
             </div>
 
-            <header className={`header${hidden && !mobileMenuOpen ? ' header--hidden' : ''}${mobileMenuOpen ? ' header--menu-open' : ''}`}>
+            <header className={`header${mobileMenuOpen ? ' header--menu-open' : ''}`}>
                 <button
                     className="mobile-menu-toggle"
                     onClick={(e) => {

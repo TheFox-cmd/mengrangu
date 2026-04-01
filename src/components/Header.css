@@ -54,16 +54,19 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  bottom: 0;
   z-index: 100;
-  padding: 60px 28px 0;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  padding: 0 0 0 28px;
   pointer-events: none;
-  transition: transform 0.3s ease;
 
   @media (max-width: 768px) {
     padding: 0;
+    top: 0;
+    bottom: auto;
+    right: 0;
+    align-items: flex-start;
     justify-content: flex-start;
   }
 }
@@ -134,8 +137,6 @@
 }
 
 .header--hidden {
-  transform: translateY(-100%);
-
   @media (max-width: 768px) {
     transform: none;
   }
@@ -143,11 +144,12 @@
 
 .header-nav {
   display: flex;
-  gap: 40px;
-  align-items: center;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
   pointer-events: auto;
-  padding: 14px 24px;
-  border-radius: 999px;
+  padding: 20px 18px;
+  border-radius: 16px;
   background: var(--surface-glass);
   border: 1px solid var(--surface-border);
   box-shadow: var(--surface-shadow);
@@ -196,17 +198,18 @@
 .toggle-arrow {
   font-size: 0.95rem;
   transition: transform 0.25s ease;
+  transform: rotate(-90deg);
 
   &.open {
-    transform: rotate(180deg);
+    transform: rotate(0deg);
   }
 }
 
 .header-dropdown {
   position: absolute;
-  top: calc(100% + 12px);
-  left: 50%;
-  transform: translateX(-50%);
+  top: -8px;
+  left: calc(100% + 12px);
+  transform: none;
   list-style: none;
   margin: 0;
   padding: 8px 0;
