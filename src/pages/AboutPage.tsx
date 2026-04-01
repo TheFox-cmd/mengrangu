@@ -29,10 +29,9 @@ export default function AboutPage() {
                     Download CV
                 </a>
                 <div className="about-links">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                    <a href="https://x.com" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
-                    <a href="https://www.artstation.com/mengrangu" target="_blank" rel="noopener noreferrer">Artstation</a>
+                    <a href="https://www.instagram.com/tastybunny2019/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="https://www.linkedin.com/in/mengran-gu-b81362b4/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="https://www.artstation.com/mengrangu" target="_blank" rel="noopener noreferrer">ArtStation</a>
                 </div>
             </div>
         </div>
