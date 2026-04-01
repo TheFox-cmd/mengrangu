@@ -1,9 +1,18 @@
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import './BackButton.css'
+
+let internalNavCount = 0
 
 export default function BackButton() {
     const navigate = useNavigate()
-    const canGoBack = window.history.length > 1
+    const location = useLocation()
+    const [canGoBack, setCanGoBack] = useState(internalNavCount > 0)
+
+    useEffect(() => {
+        internalNavCount++
+        setCanGoBack(internalNavCount > 1)
+    }, [location])
 
     if (!canGoBack) return null
 
