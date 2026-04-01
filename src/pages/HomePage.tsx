@@ -8,12 +8,8 @@ import useMasonryColumns from '../hooks/useMasonryColumns'
 import usePageTitle from '../hooks/usePageTitle'
 import './HomePage.css'
 
-let mountCount = 0
-
 export default function HomePage() {
     usePageTitle('Home')
-
-    const [animKey] = useState(() => ++mountCount)
 
     const [guestUnlocked, setGuestUnlocked] = useState(() => sessionStorage.getItem('guests-auth') === 'true')
 
