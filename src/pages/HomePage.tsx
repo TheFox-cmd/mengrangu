@@ -48,15 +48,6 @@ export default function HomePage() {
         <div className="home-page">
             <BackButton />
             <section className="home-gallery-section">
-                <div className="home-artist-tag">
-                    <div className="home-artist-wave-wrap" key={animKey}>
-                        <div className="home-artist-text">
-                            <span className="home-artist-lg">Art</span>
-                            <span className="home-artist-sm">of</span>
-                            <span className="home-artist-lg">Mengrangu</span>
-                        </div>
-                    </div>
-                </div>
                 <div className="home-masonry-gallery">
                     {columns.map((column, columnIndex) => (
                         <div className="home-masonry-column" key={columnIndex}>

@@ -117,6 +117,14 @@ export default function Header() {
                 {theme === 'dark' ? <HiSun /> : <HiMoon />}
             </button>
 
+            <div className="header-title">
+                <div className="header-title-text">
+                    <span className="header-title-lg">Art</span>
+                    <span className="header-title-sm">of</span>
+                    <span className="header-title-lg">Mengrangu</span>
+                </div>
+            </div>
+
             <header className={`header${hidden && !mobileMenuOpen ? ' header--hidden' : ''}${mobileMenuOpen ? ' header--menu-open' : ''}`}>
                 <button
                     className="mobile-menu-toggle"
