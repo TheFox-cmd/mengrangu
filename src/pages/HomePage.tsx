@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import BackToTop from '../components/BackToTop'
@@ -8,11 +8,12 @@ import useMasonryColumns from '../hooks/useMasonryColumns'
 import usePageTitle from '../hooks/usePageTitle'
 import './HomePage.css'
 
+let mountCount = 0
+
 export default function HomePage() {
     usePageTitle('Home')
 
-    const animKey = useRef(0)
-    animKey.current++
+    const [animKey] = useState(() => ++mountCount)
 
     const [guestUnlocked, setGuestUnlocked] = useState(() => sessionStorage.getItem('guests-auth') === 'true')
 
@@ -48,7 +49,7 @@ export default function HomePage() {
             <BackButton />
             <section className="home-gallery-section">
                 <div className="home-artist-tag">
-                    <div className="home-artist-wave-wrap">
+                    <div className="home-artist-wave-wrap" key={animKey}>
                         <div className="home-artist-text">
                             <span className="home-artist-lg">Art</span>
                             <span className="home-artist-sm">of</span>
