@@ -13,7 +13,7 @@ import {
 } from 'react-icons/hi2'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { gallerySections } from '../data/gallery'
-import { publicProjects } from '../data/projects'
+import { guestProjects, publicProjects } from '../data/projects'
 import './Header.css'
 
 const navLinks = [
@@ -193,8 +193,8 @@ export default function Header() {
                     </div>
 
                     <Link
-                        to="/guests"
-                        className={`nav-link${location.pathname === '/guests' ? ' active' : ''}`}
+                        to={guestProjects.length === 1 ? `/projects/${guestProjects[0].slug}` : '/guests'}
+                        className={`nav-link${location.pathname === '/guests' || (guestProjects.length === 1 && location.pathname === `/projects/${guestProjects[0]?.slug}`) ? ' active' : ''}`}
                     >
                         Guests
                     </Link>
@@ -229,7 +229,7 @@ export default function Header() {
                                     <HiInformationCircle className="mobile-menu-icon" aria-hidden="true" />
                                     <span>About</span>
                                 </button>
-                                <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate('/guests')}>
+                                <button className="mobile-menu-link mobile-menu-page-link" onClick={() => onNavigate(guestProjects.length === 1 ? `/projects/${guestProjects[0].slug}` : '/guests')}>
                                     <HiUsers className="mobile-menu-icon" aria-hidden="true" />
                                     <span>Guests</span>
                                 </button>

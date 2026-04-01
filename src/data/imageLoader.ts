@@ -21,13 +21,5 @@ function groupByFolder(
   return groups
 }
 
-const projectImagesByFolder = groupByFolder(projectModules, '../assets/projects/')
-const guestImagesByFolder = groupByFolder(guestModules, '../assets/guests/')
-
-export function getProjectImages(folder: string): string[] {
-  return projectImagesByFolder[folder] ?? []
-}
-
-export function getGuestImages(folder: string): string[] {
-  return guestImagesByFolder[folder] ?? []
-}
+export const projectImagesByFolder = groupByFolder(projectModules, '../assets/projects/')
+export const guestImagesByFolder = groupByFolder(guestModules, '../assets/guests/')

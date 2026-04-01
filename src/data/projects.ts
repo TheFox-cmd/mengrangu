@@ -1,4 +1,4 @@
-import { getGuestImages, getProjectImages } from './imageLoader'
+import { guestImagesByFolder, projectImagesByFolder } from './imageLoader'
 
 export interface Project {
   id: string
@@ -101,18 +101,25 @@ const configs: ProjectConfig[] = [
   },
 ]
 
-export const projects: Project[] = configs.map((config, index) => ({
-  id: String(index + 1),
-  title: config.title,
-  brief: config.brief,
-  slug: config.slug,
-  color: config.color,
-  description: config.description,
-  guestOnly: config.guestOnly,
-  images: config.guestOnly
-    ? getGuestImages(config.folder ?? config.slug)
-    : getProjectImages(config.folder ?? config.slug),
-}))
+export const projects: Project[] = configs
+  .map((config, index) => {
+    const folder = config.folder ?? config.slug
+    const images = config.guestOnly
+      ? guestImagesByFolder[folder]
+      : projectImagesByFolder[folder]
+    if (!images || images.length === 0) return null
+    return {
+      id: String(index + 1),
+      title: config.title,
+      brief: config.brief,
+      slug: config.slug,
+      color: config.color,
+      description: config.description,
+      ...(config.guestOnly ? { guestOnly: config.guestOnly } : {}),
+      images,
+    } as Project
+  })
+  .filter((p): p is Project => p !== null)
 
 export const publicProjects = projects.filter((p) => !p.guestOnly)
 export const guestProjects = projects.filter((p) => p.guestOnly)

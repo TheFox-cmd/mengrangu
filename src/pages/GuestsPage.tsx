@@ -1,7 +1,7 @@
 import { sha256 } from 'js-sha256'
 import { useEffect, useRef, useState } from 'react'
 import { HiChevronDown, HiEye, HiEyeSlash } from 'react-icons/hi2'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import Footer from '../components/Footer'
 import { guestProjects } from '../data/projects'
@@ -72,6 +72,10 @@ export default function GuestsPage() {
         } else {
             setError(true)
         }
+    }
+
+    if (authenticated && guestProjects.length === 1) {
+        return <Navigate to={`/projects/${guestProjects[0].slug}`} replace />
     }
 
     if (!authenticated) {

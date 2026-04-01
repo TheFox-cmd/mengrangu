@@ -3,6 +3,9 @@ import './BackButton.css'
 
 export default function BackButton() {
     const navigate = useNavigate()
+    const canGoBack = window.history.length > 1
+
+    if (!canGoBack) return null
 
     return (
         <button className="back-button" onClick={() => navigate(-1)} aria-label="Go back">
