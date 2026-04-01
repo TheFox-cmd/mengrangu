@@ -25,39 +25,43 @@ export default function ImageDetailPage() {
             .filter((entry): entry is { src: string; sourceTitle: string; sourceColor: string } => !!entry.src)
     }, [guestUnlocked])
 
-    let images: string[] = []
-    let sectionTitle = ''
-    let basePath = ''
-    let sectionColor = '#E8E0D8'
-    let isGuestOnly = false
-    let backLabel = ''
+    const { images, sectionTitle, basePath, sectionColor, isGuestOnly, backLabel } = useMemo(() => {
+        let images: string[] = []
+        let sectionTitle = ''
+        let basePath = ''
+        let sectionColor = '#E8E0D8'
+        let isGuestOnly = false
+        let backLabel = ''
 
-    if (isHomeFlow) {
-        images = homeImageSet.map((entry) => entry.src)
-        sectionTitle = 'Home'
-        basePath = '/home'
-        sectionColor = homeImageSet[idx]?.sourceColor ?? '#E8E0D8'
-        backLabel = 'Home'
-    } else if (type === 'projects') {
-        const project = projects.find((p) => p.slug === slug)
-        if (project) {
-            images = project.images
-            sectionTitle = project.title
-            basePath = `/projects/${slug}`
-            sectionColor = project.color
-            isGuestOnly = !!project.guestOnly
-            backLabel = project.title
+        if (isHomeFlow) {
+            images = homeImageSet.map((entry) => entry.src)
+            sectionTitle = 'Home'
+            basePath = '/home'
+            sectionColor = homeImageSet[idx]?.sourceColor ?? '#E8E0D8'
+            backLabel = 'Home'
+        } else if (type === 'projects') {
+            const project = projects.find((p) => p.slug === slug)
+            if (project) {
+                images = project.images
+                sectionTitle = project.title
+                basePath = `/projects/${slug}`
+                sectionColor = project.color
+                isGuestOnly = !!project.guestOnly
+                backLabel = project.title
+            }
+        } else if (type === 'gallery') {
+            const section = gallerySections.find((s) => s.slug === slug)
+            if (section) {
+                images = section.images.filter(isRealImage)
+                sectionTitle = section.title
+                basePath = `/gallery/${slug}`
+                sectionColor = section.color
+                backLabel = section.title
+            }
         }
-    } else if (type === 'gallery') {
-        const section = gallerySections.find((s) => s.slug === slug)
-        if (section) {
-            images = section.images.filter(isRealImage)
-            sectionTitle = section.title
-            basePath = `/gallery/${slug}`
-            sectionColor = section.color
-            backLabel = section.title
-        }
-    }
+
+        return { images, sectionTitle, basePath, sectionColor, isGuestOnly, backLabel }
+    }, [isHomeFlow, homeImageSet, idx, type, slug])
 
     usePageTitle(sectionTitle || 'Image')
 

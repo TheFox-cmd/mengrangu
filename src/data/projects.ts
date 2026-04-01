@@ -1,30 +1,4 @@
-import arcanaGwenFinal from '../assets/projects/arcana-gwen/final.jpg'
-import arcanaGwenPass2 from '../assets/projects/arcana-gwen/pass-2.jpg'
-import arcanaGwenThumbnails from '../assets/projects/arcana-gwen/thumbnail-explorations.jpg'
-import arcanaGwenWeek4 from '../assets/projects/arcana-gwen/week-4.jpg'
-
-import bloodmoonConcept from '../assets/projects/bloodmoon-liliah/concept-edit.jpg'
-import bloodmoonRenders1 from '../assets/projects/bloodmoon-liliah/renders-1.jpg'
-import bloodmoonRenders2 from '../assets/projects/bloodmoon-liliah/renders-2.jpg'
-import bloodmoonRenders3 from '../assets/projects/bloodmoon-liliah/renders-3.jpg'
-import bloodmoonSkillShots from '../assets/projects/bloodmoon-liliah/skill-shots.jpg'
-
-import wildSkyAwakenFinal from '../assets/projects/wild-sky/awaken-skin-final.jpg'
-import wildSkyFireJesterRender from '../assets/projects/wild-sky/banner-design/fire-jester-render.jpg'
-import wildSkyLightHeroKatt from '../assets/projects/wild-sky/banner-design/light-hero-katt.jpg'
-import wildSkyMedusa from '../assets/projects/wild-sky/banner-design/medusa.jpg'
-import wildSkyCentaurFinal from '../assets/projects/wild-sky/centaur-skin-final.jpg'
-import wildSkyJesterAwaken from '../assets/projects/wild-sky/jester-awaken-final.jpg'
-import wildSkyJesterFireHero from '../assets/projects/wild-sky/jester-fire-hero-concept.jpg'
-import wildSkyJesterHalloween from '../assets/projects/wild-sky/jester-halloween.jpg'
-import wildSkyJesterProp from '../assets/projects/wild-sky/jester-prop.jpg'
-
-import zeronisNftFoxy from '../assets/projects/zeronis-nft/foxy.jpg'
-import zeronisNftTaeyeon from '../assets/projects/zeronis-nft/taeyeon.jpg'
-
-import zylaExpression from '../assets/projects/zyla/expression.jpg'
-import zylaIdeation from '../assets/projects/zyla/ideation.jpg'
-import zylaPresentation from '../assets/projects/zyla/presentation.jpg'
+import { getGuestImages, getProjectImages } from './imageLoader'
 
 export interface Project {
   id: string
@@ -37,40 +11,86 @@ export interface Project {
   guestOnly?: boolean
 }
 
-export const projects: Project[] = [
+interface ProjectConfig {
+  title: string
+  brief: string
+  slug: string
+  folder?: string
+  color: string
+  description: string
+  guestOnly?: boolean
+}
+
+const configs: ProjectConfig[] = [
   {
-    id: '1',
     title: 'Arcana Gwen',
     brief: 'Character concept art & skin design',
     slug: 'arcana-gwen',
     color: '#C7B299',
     description:
       'Concept explorations and final renders for the Arcana Gwen skin. Focused on thumbnail ideation, iterative passes, and a polished final deliverable.',
-    images: [
-      arcanaGwenFinal,
-      arcanaGwenPass2,
-      arcanaGwenThumbnails,
-      arcanaGwenWeek4,
-    ],
   },
   {
-    id: '2',
     title: 'Bloodmoon Liliah',
     brief: 'Bloodmoon-themed champion concept design',
     slug: 'bloodmoon-liliah',
     color: '#8B9EAE',
     description:
       'A Bloodmoon skin concept for Lillia — from initial concept edit through skill shot explorations and final renders.',
-    images: [
-      bloodmoonConcept,
-      bloodmoonSkillShots,
-      bloodmoonRenders1,
-      bloodmoonRenders2,
-      bloodmoonRenders3,
-    ],
   },
   {
-    id: '3',
+    title: 'Character Art (Bitcraft)',
+    brief: 'Profession-themed character art for Bitcraft',
+    slug: 'character-art-bitcraft',
+    folder: 'character-art (bitcraft)',
+    color: '#B0A898',
+    description:
+      'Character art designs spanning various in-game professions — carpentry, foraging, hunting, mining, smithing, and tailoring.',
+  },
+  {
+    title: 'Creature Design (Bitcraft)',
+    brief: 'Creature concepts & color variations for Bitcraft',
+    slug: 'creature-design-bitcraft',
+    folder: 'creature-design (bitcraft)',
+    color: '#A0B098',
+    description:
+      'Creature design work for Bitcraft including animal templates, color variations, and presentation sheets.',
+  },
+  {
+    title: 'Illustration (Bitcraft)',
+    brief: 'Promotional illustration for Bitcraft',
+    slug: 'illustration-bitcraft',
+    folder: 'illustration (bitcraft)',
+    color: '#98A8B0',
+    description:
+      'Banner illustration and promotional artwork created for the Bitcraft project.',
+  },
+  {
+    title: 'NPC Design (Bitcraft)',
+    brief: 'NPC character designs for Bitcraft',
+    slug: 'npc-design-bitcraft',
+    folder: 'NPC design (bitcraft)',
+    color: '#A89890',
+    description:
+      'NPC character designs for Bitcraft — including Brico, Ramparte, and Varu and Laru with exploration sheets and presentation templates.',
+  },
+  {
+    title: 'Zeronis NFT',
+    brief: 'Stylized character illustrations',
+    slug: 'zeronis-nft',
+    color: '#9BB5A0',
+    description:
+      'Stylized character illustrations created for the Zeronis NFT collection, featuring expressive poses and vibrant rendering.',
+  },
+  {
+    title: 'Zyla',
+    brief: 'Original character design & presentation',
+    slug: 'zyla',
+    color: '#B8A08A',
+    description:
+      'Original character design for Zyla — from early ideation and expression sheets through to a polished presentation.',
+  },
+  {
     title: 'Wild Sky',
     brief: 'Character skins, props & banner art for Wild Sky',
     slug: 'wild-sky',
@@ -78,46 +98,21 @@ export const projects: Project[] = [
     guestOnly: true,
     description:
       'A collection of character skin designs, prop concepts, and promotional banner art created for the Wild Sky project. Includes awaken skins, Halloween variants, and hero concept art.',
-    images: [
-      wildSkyAwakenFinal,
-      wildSkyCentaurFinal,
-      wildSkyJesterAwaken,
-      wildSkyJesterHalloween,
-      wildSkyJesterProp,
-      wildSkyJesterFireHero,
-      wildSkyFireJesterRender,
-      wildSkyLightHeroKatt,
-      wildSkyMedusa,
-    ],
-  },
-  {
-    id: '4',
-    title: 'Zeronis NFT',
-    brief: 'Stylized character illustrations',
-    slug: 'zeronis-nft',
-    color: '#9BB5A0',
-    description:
-      'Stylized character illustrations created for the Zeronis NFT collection, featuring expressive poses and vibrant rendering.',
-    images: [
-      zeronisNftFoxy,
-      zeronisNftTaeyeon,
-    ],
-  },
-  {
-    id: '5',
-    title: 'Zyla',
-    brief: 'Original character design & presentation',
-    slug: 'zyla',
-    color: '#B8A08A',
-    description:
-      'Original character design for Zyla — from early ideation and expression sheets through to a polished presentation.',
-    images: [
-      zylaExpression,
-      zylaIdeation,
-      zylaPresentation,
-    ],
   },
 ]
+
+export const projects: Project[] = configs.map((config, index) => ({
+  id: String(index + 1),
+  title: config.title,
+  brief: config.brief,
+  slug: config.slug,
+  color: config.color,
+  description: config.description,
+  guestOnly: config.guestOnly,
+  images: config.guestOnly
+    ? getGuestImages(config.folder ?? config.slug)
+    : getProjectImages(config.folder ?? config.slug),
+}))
 
 export const publicProjects = projects.filter((p) => !p.guestOnly)
 export const guestProjects = projects.filter((p) => p.guestOnly)
