@@ -28,6 +28,10 @@
   --tag-shadow: rgba(0, 0, 0, 0.18);
   --tag-highlight: rgba(255, 255, 255, 0.5);
 
+  --title-color: #8B7355;
+  --title-border: #C4A882;
+  --title-bg: #FFF6ED;
+
   --font-heading: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
 
@@ -63,6 +67,10 @@
   --surface-shadow: 0 10px 24px rgba(0, 0, 0, 0.32);
   --surface-shadow-strong: 10px 0 34px rgba(0, 0, 0, 0.5);
   --surface-hover: #2c2722;
+
+  --title-color: #e0cbb4;
+  --title-border: #8a7560;
+  --title-bg: #1d1a17;
   --card-border-strong: #4a4036;
   --card-meta-bg: rgba(29, 27, 24, 0.96);
   --card-meta-border: #3a342e;
