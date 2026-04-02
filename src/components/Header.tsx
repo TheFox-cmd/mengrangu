@@ -120,16 +120,14 @@ export default function Header() {
                 {theme === 'dark' ? <HiSun /> : <HiMoon />}
             </button>
 
-            {location.pathname !== '/about' && (
-                <div className="header-title">
-                    <div className="header-title-text">
-                        <img src={logoImg} alt="" className="header-title-logo" />
-                        <span className="header-title-lg">Art</span>
-                        <span className="header-title-sm">of</span>
-                        <span className="header-title-lg">Mengran</span>
-                    </div>
+            <div className={`header-title${location.pathname === '/about' ? ' header-title--about' : ''}`}>
+                <div className="header-title-text">
+                    <img src={logoImg} alt="" className="header-title-logo" />
+                    <span className="header-title-lg">Art</span>
+                    <span className="header-title-sm">of</span>
+                    <span className="header-title-lg">Mengran</span>
                 </div>
-            )}
+            </div>
 
 
             <header className={`header${mobileMenuOpen ? ' header--menu-open' : ''}`}>
