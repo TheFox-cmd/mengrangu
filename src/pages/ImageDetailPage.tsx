@@ -154,9 +154,12 @@ export default function ImageDetailPage() {
                             fetchPriority="high"
                             decoding="async"
                         />
-                        <p className="image-detail-caption">{imageName}</p>
-                        <p className="image-detail-counter">{idx + 1} / {images.length}</p>
                     </div>
+                </div>
+
+                <div className="image-detail-info">
+                    <p className="image-detail-caption">{imageName}</p>
+                    <p className="image-detail-counter">{idx + 1} / {images.length}</p>
                 </div>
 
                 <nav className="image-detail-nav">
