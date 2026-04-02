@@ -74,6 +74,32 @@
   text-align: center;
 }
 
+.project-video-section {
+  margin-top: 48px;
+}
+
+.project-video-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.project-video-item {
+  width: 320px;
+
+  iframe {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    border: none;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 600px) {
+    width: 180px;
+  }
+}
+
 .detail-gallery {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

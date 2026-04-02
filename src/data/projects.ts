@@ -9,6 +9,7 @@ export interface Project {
   description: string
   images: string[]
   guestOnly?: boolean
+  videoEmbeds?: string[]
 }
 
 const colors = [
@@ -50,6 +51,12 @@ function buildProjects(
 }
 
 const publicProjectList = buildProjects(projectImagesByFolder, false, 1)
+
+const bricoProject = publicProjectList.find((p) => p.slug === 'brico')
+if (bricoProject) {
+  bricoProject.videoEmbeds = ['https://www.youtube.com/embed/2g1IJfJj6MI']
+}
+
 const guestProjectList = buildProjects(guestImagesByFolder, true, publicProjectList.length + 1)
 
 export const projects: Project[] = [...publicProjectList, ...guestProjectList]

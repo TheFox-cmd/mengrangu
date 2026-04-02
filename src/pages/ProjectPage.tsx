@@ -99,6 +99,23 @@ export default function ProjectPage() {
                         <p>Gallery coming soon</p>
                     </div>
                 )}
+
+                {project.videoEmbeds && project.videoEmbeds.length > 0 && (
+                    <div className="project-video-section">
+                        <div className="project-video-grid">
+                            {project.videoEmbeds.map((url, i) => (
+                                <div className="project-video-item" key={i}>
+                                    <iframe
+                                        src={url}
+                                        title={`${project.title} video ${i + 1}`}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             <nav className="project-nav">
