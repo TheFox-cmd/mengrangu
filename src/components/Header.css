@@ -11,10 +11,6 @@
 
 .header-title--about {
   display: none;
-
-  @media (max-width: 768px) {
-    display: flex;
-  }
 }
 
 .header-title-text {

@@ -1,3 +1,4 @@
+import logoImg from '../assets/logo.png'
 import resumePdf from '../assets/Resume 2026_new.pdf'
 import BackButton from '../components/BackButton'
 import usePageTitle from '../hooks/usePageTitle'
@@ -9,6 +10,14 @@ export default function AboutPage() {
     return (
         <div className="about-container">
             <BackButton />
+            <div className="about-header-title">
+                <div className="about-header-text">
+                    <img src={logoImg} alt="" className="about-header-logo" />
+                    <span className="about-header-lg">Art</span>
+                    <span className="about-header-sm">of</span>
+                    <span className="about-header-lg">Mengran</span>
+                </div>
+            </div>
             <div className="about-image">
                 <img src="/about.png" alt="Mengran" />
             </div>
@@ -17,13 +26,13 @@ export default function AboutPage() {
                 <p className="about-bio">
                     Mengran is a conceptual artist with 4 years of
                     experience in the gaming industry, focused on character design and
-                    environmental illustration. I'm drawn to the small things that make
+                    environmental illustration. She is drawn to the small things that make
                     a world feel alive: the shape of a silhouette, the mood of a quiet
                     room, the feeling that a place has been lived in long before the
-                    player arrived. I love creating art that carries atmosphere,
+                    player arrived. She loves creating art that carries atmosphere,
                     emotion, and a sense of story without needing to say too much.
                     If you'd like to collaborate or just say hello, feel free to reach out —
-                    I'm always open to new adventures!
+                    she's always open to new adventures!
                 </p>
                 <a href={resumePdf} download className="about-download-cv">
                     Download CV
