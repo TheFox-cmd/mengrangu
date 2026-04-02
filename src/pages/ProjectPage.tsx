@@ -60,13 +60,7 @@ export default function ProjectPage() {
     const nextProject = projectIndex < publicProjects.length - 1 ? publicProjects[projectIndex + 1] : null
 
     if (!project) {
-        return (
-            <div className="project-page">
-                <div className="project-detail-header">
-                    <p>Project not found.</p>
-                </div>
-            </div>
-        )
+        return <Navigate to="/home" replace />
     }
 
     if (project.guestOnly && sessionStorage.getItem('guests-auth') !== 'true') {

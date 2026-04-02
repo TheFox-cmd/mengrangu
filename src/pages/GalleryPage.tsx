@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import BackToTop from '../components/BackToTop'
 import Footer from '../components/Footer'
@@ -94,9 +94,11 @@ export default function GalleryPage() {
                 {!slug && <p className="gallery-page-subtitle">Personal work, sketches, and explorations</p>}
             </div>
 
-            {sections.length === 0 ? (
+            {sections.length === 0 && slug ? (
+                <Navigate to="/home" replace />
+            ) : sections.length === 0 ? (
                 <div className="gallery-empty">
-                    <p>Section not found.</p>
+                    <p>No gallery sections available.</p>
                 </div>
             ) : (
                 sections.map((section) => (

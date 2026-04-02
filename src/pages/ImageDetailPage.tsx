@@ -104,14 +104,7 @@ export default function ImageDetailPage() {
     }
 
     if (!images.length || idx < 0 || idx >= images.length) {
-        return (
-            <div className="image-detail-page">
-                <BackButton />
-                <div className="image-detail-empty">
-                    <p>Image not found.</p>
-                </div>
-            </div>
-        )
+        return <Navigate to="/home" replace />
     }
 
     const imageName = (() => {
