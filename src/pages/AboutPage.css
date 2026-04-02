@@ -93,10 +93,13 @@
 
 @media (max-width: 768px) {
   .about-container {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
     flex-direction: column;
-    height: 100vh;
-    max-height: 100vh;
-    min-height: 100vh;
+    height: auto;
+    max-height: none;
+    min-height: 0;
     overflow: hidden;
   }
 
