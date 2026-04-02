@@ -92,17 +92,18 @@ body {
   max-width: 100%;
   margin: 0;
   background: var(--bg);
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior-y: auto;
+  overscroll-behavior: none;
 }
 
 html {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior-y: auto;
+  overscroll-behavior: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 #root {
@@ -111,8 +112,6 @@ html {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: visible;
 }
 
 h1, h2, h3 {

@@ -8,7 +8,6 @@
   justify-content: flex-start;
   background: var(--bg);
   padding: 24px;
-  overflow-x: hidden;
 }
 
 .guests-gate-card {
@@ -120,8 +119,6 @@
   min-height: 100svh;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
@@ -152,7 +149,6 @@
   margin: 0;
   padding: 0 48px 64px;
   color: var(--text);
-  overflow-x: hidden;
 
   @media (max-width: 768px) {
     padding: 0 24px 40px;

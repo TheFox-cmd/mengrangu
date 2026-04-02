@@ -1,7 +1,6 @@
 .about-container {
   height: 100svh;
   max-height: 100svh;
-  overflow: hidden;
   display: flex;
   align-items: stretch;
 }
@@ -98,7 +97,6 @@
     height: 100vh;
     max-height: 100vh;
     min-height: 100vh;
-    overflow: hidden;
   }
 
   .about-image {

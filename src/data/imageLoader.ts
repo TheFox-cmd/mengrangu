@@ -8,6 +8,11 @@ const guestModules = import.meta.glob<string>(
   { eager: true, import: 'default' },
 )
 
+const galleryModules = import.meta.glob<string>(
+  '../assets/gallery/**/*.{jpg,jpeg,png,webp,gif}',
+  { eager: true, import: 'default' },
+)
+
 function groupByFolder(
   modules: Record<string, string>,
   base: string,
@@ -23,3 +28,4 @@ function groupByFolder(
 
 export const projectImagesByFolder = groupByFolder(projectModules, '../assets/projects/')
 export const guestImagesByFolder = groupByFolder(guestModules, '../assets/guests/')
+export const galleryImagesByFolder = groupByFolder(galleryModules, '../assets/gallery/')

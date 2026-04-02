@@ -1,5 +1,6 @@
 import resumePdf from '../assets/Resume 2026_new.pdf'
 import BackButton from '../components/BackButton'
+import Footer from '../components/Footer'
 import usePageTitle from '../hooks/usePageTitle'
 import './AboutPage.css'
 
@@ -34,6 +35,7 @@ export default function AboutPage() {
                     <a href="https://www.artstation.com/mengrangu" target="_blank" rel="noopener noreferrer">ArtStation</a>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

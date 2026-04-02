@@ -47,8 +47,7 @@ function LazyImage({
 }
 
 function GallerySectionGrid({ section, slug }: { section: typeof gallerySections[number]; slug?: string }) {
-    const isRealImage = (src: string) => !src.includes('placehold.co')
-    const images = section.images.filter(isRealImage)
+    const images = section.images
     const galleryColumns = useMasonryColumns(
         images.map((src, index) => ({ src, index })),
     )

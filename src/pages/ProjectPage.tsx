@@ -3,7 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import BackToTop from '../components/BackToTop'
 import Footer from '../components/Footer'
-import { projects } from '../data/projects'
+import { projects, publicProjects } from '../data/projects'
 import useMasonryColumns from '../hooks/useMasonryColumns'
 import usePageTitle from '../hooks/usePageTitle'
 import './ProjectPage.css'
@@ -55,6 +55,10 @@ export default function ProjectPage() {
         (project?.images ?? []).map((src, index) => ({ src, index })),
     )
 
+    const projectIndex = publicProjects.findIndex((p) => p.slug === slug)
+    const prevProject = projectIndex > 0 ? publicProjects[projectIndex - 1] : null
+    const nextProject = projectIndex < publicProjects.length - 1 ? publicProjects[projectIndex + 1] : null
+
     if (!project) {
         return (
             <div className="project-page">
@@ -102,6 +106,21 @@ export default function ProjectPage() {
                     </div>
                 )}
             </div>
+
+            <nav className="project-nav">
+                {prevProject ? (
+                    <Link to={`/projects/${prevProject.slug}`} className="project-nav-link project-nav-prev">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                        <span>{prevProject.title}</span>
+                    </Link>
+                ) : <span />}
+                {nextProject ? (
+                    <Link to={`/projects/${nextProject.slug}`} className="project-nav-link project-nav-next">
+                        <span>{nextProject.title}</span>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                    </Link>
+                ) : <span />}
+            </nav>
 
             <Footer />
             <BackToTop />

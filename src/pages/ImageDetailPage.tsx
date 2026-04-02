@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo } from 'react'
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import logoImg from '../assets/logo.png'
 import BackButton from '../components/BackButton'
+import Footer from '../components/Footer'
 import { gallerySections } from '../data/gallery'
 import { guestProjects, projects, publicProjects } from '../data/projects'
 import usePageTitle from '../hooks/usePageTitle'
@@ -12,7 +14,6 @@ export default function ImageDetailPage() {
     const idx = Number(index)
     const isHomeFlow = type === undefined && slug === undefined
     const guestUnlocked = sessionStorage.getItem('guests-auth') === 'true'
-    const isRealImage = (src: string) => !src.includes('placehold.co')
 
     const homeImageSet = useMemo(() => {
         const visibleProjects = guestUnlocked ? [...publicProjects, ...guestProjects] : publicProjects
@@ -25,7 +26,7 @@ export default function ImageDetailPage() {
             .filter((entry): entry is { src: string; sourceTitle: string; sourceColor: string } => !!entry.src)
     }, [guestUnlocked])
 
-    const { images, sectionTitle, basePath, sectionColor, isGuestOnly, backLabel } = useMemo(() => {
+    const { images, sectionTitle, sectionColor, isGuestOnly } = useMemo(() => {
         let images: string[] = []
         let sectionTitle = ''
         let basePath = ''
@@ -52,7 +53,7 @@ export default function ImageDetailPage() {
         } else if (type === 'gallery') {
             const section = gallerySections.find((s) => s.slug === slug)
             if (section) {
-                images = section.images.filter(isRealImage)
+                images = section.images
                 sectionTitle = section.title
                 basePath = `/gallery/${slug}`
                 sectionColor = section.color
@@ -121,20 +122,29 @@ export default function ImageDetailPage() {
         return withoutBuildHash.replace(/[-_]/g, ' ').trim()
     })()
 
+    const getImageName = (i: number) => {
+        const src = images[i] ?? ''
+        const decoded = decodeURIComponent(src.split('/').pop() ?? '')
+        const baseName = decoded.replace(/\.[^.]+$/, '')
+        const withoutBuildHash = baseName.replace(/-[A-Za-z0-9_]{6,}$/, '')
+        return withoutBuildHash.replace(/[-_]/g, ' ').trim()
+    }
+
     return (
         <div className="image-detail-page">
             <BackButton />
 
             <div className="image-detail-content">
-                <div className="image-detail-viewer" style={{ backgroundColor: sectionColor }}>
-                    {hasPrev && (
-                        <button className="image-nav image-nav--prev" onClick={() => goTo(idx - 1)} aria-label="Previous image">
-                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="15 18 9 12 15 6" />
-                            </svg>
-                        </button>
-                    )}
+                <div className="image-detail-header-title">
+                    <div className="image-detail-header-text">
+                        <img src={logoImg} alt="" className="image-detail-header-logo" />
+                        <span className="image-detail-header-lg">Art</span>
+                        <span className="image-detail-header-sm">of</span>
+                        <span className="image-detail-header-lg">Mengran</span>
+                    </div>
+                </div>
 
+                <div className="image-detail-viewer" style={{ backgroundColor: sectionColor }}>
                     <div className="image-detail-center">
                         <img
                             src={images[idx]}
@@ -145,46 +155,26 @@ export default function ImageDetailPage() {
                             decoding="async"
                         />
                         <p className="image-detail-caption">{imageName}</p>
-                    </div>
-
-                    {hasNext && (
-                        <button className="image-nav image-nav--next" onClick={() => goTo(idx + 1)} aria-label="Next image">
-                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="9 18 15 12 9 6" />
-                            </svg>
-                        </button>
-                    )}
-
-                    <div className="image-nav-mobile-row" aria-hidden="true">
-                        <button
-                            className="image-nav-mobile"
-                            onClick={() => hasPrev && goTo(idx - 1)}
-                            aria-label="Previous image"
-                            disabled={!hasPrev}
-                        >
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="15 18 9 12 15 6" />
-                            </svg>
-                        </button>
-                        <button
-                            className="image-nav-mobile"
-                            onClick={() => hasNext && goTo(idx + 1)}
-                            aria-label="Next image"
-                            disabled={!hasNext}
-                        >
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="9 18 15 12 9 6" />
-                            </svg>
-                        </button>
+                        <p className="image-detail-counter">{idx + 1} / {images.length}</p>
                     </div>
                 </div>
 
-                <div className="image-detail-meta">
-                    <p className="image-detail-counter">{idx + 1} / {images.length}</p>
-                    <Link to={basePath} className="image-detail-back-link">
-                        ← Back to {backLabel || sectionTitle}
-                    </Link>
-                </div>
+                <nav className="image-detail-nav">
+                    {hasPrev ? (
+                        <button className="image-detail-nav-link image-detail-nav-prev" onClick={() => goTo(idx - 1)}>
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                            <span>{getImageName(idx - 1)}</span>
+                        </button>
+                    ) : <span />}
+                    {hasNext ? (
+                        <button className="image-detail-nav-link image-detail-nav-next" onClick={() => goTo(idx + 1)}>
+                            <span>{getImageName(idx + 1)}</span>
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                        </button>
+                    ) : <span />}
+                </nav>
+
+                <Footer />
             </div>
         </div>
     )
