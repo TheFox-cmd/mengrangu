@@ -34,8 +34,8 @@ export default function AboutPage() {
                     If you'd like to collaborate or just say hello, feel free to reach out —
                     she's always open to new adventures!
                 </p>
-                <a href={resumePdf} download className="about-download-cv">
-                    Download CV
+                <a href={resumePdf} target="_blank" rel="noopener noreferrer" className="about-download-cv">
+                    View CV
                 </a>
                 <div className="about-links">
                     <a href="https://www.instagram.com/tastybunny2019/" target="_blank" rel="noopener noreferrer">Instagram</a>
