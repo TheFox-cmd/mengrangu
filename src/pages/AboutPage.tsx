@@ -1,5 +1,5 @@
 import logoImg from '../assets/logo.png'
-import resumePdf from '../assets/Resume 2026_new.pdf'
+import resumePdf from '../assets/Resume_Mengran_2026.pdf'
 import BackButton from '../components/BackButton'
 import usePageTitle from '../hooks/usePageTitle'
 import './AboutPage.css'
